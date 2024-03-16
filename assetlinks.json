@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.SpectrumGames.MpirimpaGame",
+            "sha256_cert_fingerprints": [
+                "7E:E0:A3:BF:93:88:5A:4E:14:F9:D2:81:50:7E:D6:F5:07:87:3F:62:64:FA:B6:26:19:88:0B:D7:95:87:92:E1"
+            ]
+        }
+    }
+]

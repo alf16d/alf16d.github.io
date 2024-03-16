@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8" />
+    <title>MineSweeper</title>
+    <script type="text/javascript" src="phaser.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+</head>
+
+<style>
+    @font-face {
+        font-family: digital;
+        src: url('font/digital-7.ttf');
+    }
+
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    canvas{
+        font-family: digital-7regular;
+        margin: 0 auto;
+    }
+    form{
+        margin:0 auto;
+        width:650px;
+        height:50px;
+    }
+
+    button{
+        margin:5px;
+        width:150px;
+        height:40px;
+        background:#F62B0E;
+        border-width: 0px;
+        box-shadow: 0;
+        font-size: 20px;
+        font-weight: bold;
+        color:#FCBFB7;
+    }
+
+    button:hover{
+        color:white;
+        box-shadow: 0px 0px 5px black;
+    }
+
+    input{
+        margin:5px;
+        width:100px;
+        height:40px;
+        background:#F62B0E;
+        border-width: 0px;
+        box-shadow: 0;
+        font-size: 20px;
+        color:#FCBFB7;
+        padding-left: 5px;
+    }
+
+    input:hover{
+        color:white;
+        box-shadow: 0px 0px 5px black;
+    }
+
+    span{
+        font-family: Arial;
+    }
+</style>
+
+<body>
+    <form>
+        <button type='button' onclick="onbutclick1()">Start</button>
+        <span>Width</span><input id="t1" type="text" placeholder="width" value="30">
+        <span>Heigth</span><input id="t2"  type="text" placeholder="height" value="16">
+        <span>Mines</span><input id="t3"  type="text" placeholder="mine" value="99">
+    </form>
+</body></html>
