@@ -1,0 +1,2544 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Практична робота №2 — Спостереження явищ дифузії та випаровування | 5 клас</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-light: #e0f2fe;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --accent-dark: #b45309;
+      --success: #10b981;
+      --success-light: #d1fae5;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --purple-light: #f3e8ff;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 18px;
+      --shadow: 0 4px 16px rgba(0,0,0,0.06);
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding-bottom: 64px;
+    }
+
+    /* Top Sticky Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .header-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1.header-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 5px 9px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .icon-btn:hover, .icon-btn:active {
+      background: #e2e8f0;
+      transform: scale(0.97);
+    }
+
+    .icon-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Progress Tracker Bar */
+    .progress-bar-container {
+      background: #e2e8f0;
+      height: 4px;
+      width: 100%;
+      position: sticky;
+      top: 45px;
+      z-index: 49;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0284c7, #10b981, #f59e0b);
+      width: 14%;
+      transition: width 0.35s ease;
+    }
+
+    /* Container for content */
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 6px 10px;
+    }
+
+    /* Stepper / Tab Navigator */
+    .step-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 2px 1px 8px 1px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .step-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .step-pill {
+      flex: 0 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 18px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .step-pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .tip-box {
+      background: var(--primary-light);
+      border-left: 3px solid var(--primary);
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      color: #0369a1;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .tip-box.warning {
+      background: var(--accent-light);
+      border-left-color: var(--accent);
+      color: #92400e;
+    }
+
+    /* Interactive Simulation Canvas and Containers */
+    .sim-box {
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 8px;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.03);
+    }
+
+    canvas.sim-canvas {
+      width: 100%;
+      height: 205px;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(0,0,0,0.05);
+      display: block;
+    }
+
+    .sim-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .sim-status {
+      font-size: 12px;
+      margin-top: 6px;
+      font-weight: 700;
+      text-align: center;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      width: 100%;
+      box-sizing: border-box;
+      transition: all 0.3s;
+    }
+
+    /* Interactive Fun Quiz Widget inside Experiment */
+    .mini-quiz {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 1.5px dashed #f59e0b;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-top: 10px;
+    }
+
+    .mini-quiz-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+
+    .quiz-options {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .quiz-btn {
+      background: #fff;
+      border: 1px solid #fcd34d;
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #78350f;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn:hover {
+      background: #fef08a;
+      transform: translateY(-1px);
+    }
+
+    .quiz-btn.correct {
+      background: #10b981;
+      color: #fff;
+      border-color: #059669;
+    }
+
+    .quiz-btn.wrong {
+      background: #ef4444;
+      color: #fff;
+      border-color: #dc2626;
+      opacity: 0.6;
+    }
+
+    /* Buttons */
+    .btn {
+      appearance: none;
+      border: none;
+      outline: none;
+      background: var(--primary);
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.2s;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2);
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text);
+      box-shadow: none;
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.25);
+    }
+    .btn-accent:hover {
+      background: #d97706;
+    }
+
+    .btn-success {
+      background: var(--success);
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-purple {
+      background: var(--purple);
+      box-shadow: 0 2px 6px rgba(139, 92, 246, 0.25);
+    }
+
+    .btn-sm {
+      padding: 5px 9px;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+
+    /* Workbook fields */
+    .notebook-section {
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
+      border-radius: 12px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    .notebook-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #44403c;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .q-block {
+      margin-bottom: 10px;
+    }
+
+    .q-label {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .text-input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-family: inherit;
+      font-size: 13px;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+      resize: vertical;
+    }
+
+    .text-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+    }
+
+    /* Notebook Answer Box (Always visible for easy copying) */
+    .answer-box {
+      background: #f0fdf4;
+      border: 1px solid #a7f3d0;
+      border-left: 3.5px solid #10b981;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-top: 4px;
+      font-size: 12.5px;
+      color: #065f46;
+      line-height: 1.45;
+      display: block;
+    }
+
+    .answer-box strong {
+      color: #047857;
+    }
+
+    /* Table styles matching the notebook */
+    .table-container {
+      overflow-x: auto;
+      margin: 6px 0;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    table.nb-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+      background: #fff;
+    }
+
+    table.nb-table th {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 800;
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.nb-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: top;
+    }
+
+    table.nb-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Checklist for equipment */
+    .equip-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .equip-item {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .equip-item:hover {
+      background: #f1f5f9;
+    }
+
+    .equip-item.checked {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #065f46;
+      font-weight: 700;
+    }
+
+    .equip-checkbox {
+      width: 17px;
+      height: 17px;
+      border-radius: 5px;
+      border: 1.5px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      background: #fff;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .equip-item.checked .equip-checkbox {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+
+    /* Bottom sticky navigation bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      padding: 6px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 40;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Modal for scan view */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.82);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 14px;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .close-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-image {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Custom range sliders */
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0;
+      width: 100%;
+      background: #fff;
+      padding: 5px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .slider-label {
+      font-size: 12px;
+      font-weight: 700;
+      min-width: 110px;
+      color: #334155;
+    }
+
+    .slider-input {
+      flex: 1;
+      height: 6px;
+      border-radius: 5px;
+      background: #e2e8f0;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .slider-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+
+    .slider-val {
+      font-size: 12.5px;
+      font-weight: 800;
+      min-width: 44px;
+      text-align: right;
+      color: var(--accent-dark);
+    }
+
+    .action-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .badge-alcohol { background: #fae8ff; color: #86198f; }
+    .badge-water { background: #e0f2fe; color: #0369a1; }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 4px 6px;
+      }
+      .card {
+        padding: 10px 8px;
+        border-radius: 12px;
+      }
+      canvas.sim-canvas {
+        height: 195px;
+      }
+      .btn {
+        padding: 7px 10px;
+        font-size: 12px;
+      }
+      .btn-sm {
+        padding: 4px 7px;
+        font-size: 11px;
+      }
+      .slider-label {
+        min-width: 95px;
+        font-size: 11px;
+      }
+    }
+
+    /* Print view */
+    @media print {
+      body {
+        padding-bottom: 0;
+        background: #fff;
+      }
+      header, .bottom-bar, .sim-box, .btn, .step-pills, .progress-bar-container, .mini-quiz {
+        display: none !important;
+      }
+      .tab-content {
+        display: block !important;
+        page-break-after: always;
+      }
+      .answer-box {
+        display: block !important;
+        border: 1px solid #ccc;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header>
+    <div class="header-info">
+      <h1 class="header-title">Практична робота № 2</h1>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="btnSoundToggle" title="Звук">🔊</button>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar-container">
+    <div class="progress-bar-fill" id="progressBarFill"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Stepper Navigation Pills -->
+    <div class="step-pills" id="stepPills">
+      <button class="step-pill active" data-tab="tab-intro">📋 Вступ</button>
+      <button class="step-pill" data-tab="tab-exp1">💧 1. Спирт / Вода</button>
+      <button class="step-pill" data-tab="tab-exp2">🍊 2. Мандарин</button>
+      <button class="step-pill" data-tab="tab-exp3">🍵 3. Чай (T°)</button>
+      <button class="step-pill" data-tab="tab-exp4">🌡️ 4. Посудини</button>
+      <button class="step-pill" data-tab="tab-exp5">🧱 5. Пластилін</button>
+      <button class="step-pill" data-tab="tab-summary">🏆 Висновок</button>
+    </div>
+
+    <!-- TAB 0: ВСТУП ТА ОБЛАДНАННЯ -->
+    <div class="tab-content active" id="tab-intro">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">🔬 Тема та Мета роботи</h2>
+            <div class="card-subtitle">Сторінка 17 друкованого зошита</div>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>Тема:</strong> Спостереження явищ дифузії та випаровування.<br>
+          <strong>Мета:</strong> визначити чинники, що впливають на швидкість дифузії та випаровування речовин.
+        </div>
+
+        <p style="font-size:14px; font-weight:800; margin-bottom:8px; color:#334155;">
+          🧰 Обладнання та матеріали (натисни, щоб зібрати на лабораторний стіл):
+        </p>
+        <div class="equip-grid" id="equipGrid">
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🍊 Мандарин</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🍵 2 пакетики чаю</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🧪 Розчин спирту</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>💧 Вода дистильована</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>♨️ Гаряча вода (окріп)</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🧣 2 клаптики тканини</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🍽️ 2 пластикові тарілки</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🌡️ Термометр кімнатний</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🥛 2 прозорі склянки</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🧱 2 шматочки пластиліну</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🥣 Чашка Петрі</div>
+          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🧪 Хімічна склянка & колба</div>
+        </div>
+
+        <div style="margin-top:20px; text-align:center;">
+          <button class="btn btn-accent" style="width:100%; padding:12px; font-size:15px;" onclick="goToTab('tab-exp1')">
+            🚀 Розпочати досліди ➡️
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 1: ЗАВДАННЯ №1 (ВОДА vs СПИРТ) -->
+    <div class="tab-content" id="tab-exp1">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">💧 Завдання № 1</h2>
+            <div class="card-subtitle">Порівняння швидкості висихання води та спирту</div>
+          </div>
+          <span class="action-badge badge-water">Дослід 1</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Зволож один клаптик тканини водою, а другий — розчином етилового спирту. Поклади їх окремо на тарілки. Через 15 хв досліди обидва клаптики.
+        </div>
+
+        <!-- Interactive Simulation Container -->
+        <div class="sim-box">
+          <canvas id="canvasExp1" class="sim-canvas" width="600" height="230"></canvas>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-secondary" id="btnWetCloths" onclick="wetCloths()">💧 Змочити клаптики</button>
+            <button class="btn btn-sm btn-accent" id="btnPass15min" onclick="pass15MinExp1()">⏱️ Зачекати 15 хвилин</button>
+            <button class="btn btn-sm btn-purple" id="btnMicroscopeExp1" onclick="toggleMicroscopeExp1()">🔬 Погляд на молекули</button>
+            <button class="btn btn-sm btn-secondary" onclick="resetExp1()">🔄 Скинути</button>
+          </div>
+          <div id="clothStatus" class="sim-status" style="color:#0369a1;">
+            Натисніть «Змочити клаптики», щоб розпочати дослід!
+          </div>
+        </div>
+
+        <!-- Mini-Quiz for Kids -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: Яка рідина випарувалася першою?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 1)">🧪 Спирт</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">💧 Вода</button>
+          </div>
+        </div>
+
+        <!-- Notebook questions -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Записи у зошит (ст. 17)</div>
+
+          <div class="q-block">
+            <label class="q-label">1. Чи однаково вологими залишилися клаптики тканини?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Ні, клаптики залишилися не однаково вологими. Клаптик зі спиртом уже повністю висох, а клаптик з водою все ще залишається вологим.
+            </div>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">2. Який клаптик тканини сохне швидше?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Швидше сохне клаптик тканини, змочений спиртом (розчином етилового спирту).
+            </div>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">3. Поясни, чому швидкість висихання клаптиків тканини різна.</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Різні рідини мають різну швидкість випаровування. Сили взаємодії між молекулами спирту значно слабші, ніж між молекулами води, тому молекули спирту легше й швидше відриваються від поверхні тканини і вилітають у повітря у вигляді пари.
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; display:flex; justify-content:space-between;">
+          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-intro')">⬅️ Назад</button>
+          <button class="btn btn-sm" onclick="goToTab('tab-exp2')">Далі: Мандарин ➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ЗАВДАННЯ №2 (МАНДАРИНКА В КЛАСІ) -->
+    <div class="tab-content" id="tab-exp2">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">🍊 Завдання № 2</h2>
+            <div class="card-subtitle">Поширення запаху в повітрі (дифузія в газах)</div>
+          </div>
+          <span class="action-badge" style="background:#ffedd5; color:#c2410c;">Дослід 2</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Зніми у приміщенні шкірочку з мандарина. Чи відразу відчувається запах? Як швидко поширюється цей запах по кімнаті?
+        </div>
+
+        <!-- Simulation Box -->
+        <div class="sim-box">
+          <canvas id="canvasExp2" class="sim-canvas" width="600" height="240"></canvas>
+          <div class="slider-row">
+            <span class="slider-label">🌡️ T° повітря в класі:</span>
+            <input type="range" min="10" max="38" value="22" class="slider-input" id="roomTempSlider" oninput="updateRoomTemp(this.value)">
+            <span class="slider-val" id="roomTempVal">22°C</span>
+          </div>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-accent" id="btnPeelMandarin" onclick="peelMandarin()">🍊 Очистити мандарин</button>
+            <button class="btn btn-sm btn-secondary" onclick="resetExp2()">💨 Провітрити клас</button>
+          </div>
+          <div id="mandarinStatus" class="sim-status" style="color:#c2410c;">
+            Натисни «Очистити мандарин» і спостерігай, як аромат долає відстань до парт!
+          </div>
+        </div>
+
+        <!-- Mini Quiz -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: Як називається явище взаємного проникнення речовин?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 2)">✨ Дифузія</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 2)">🧊 Замерзання</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 2)">🧲 Магнетизм</button>
+          </div>
+        </div>
+
+        <!-- Table from Notebook -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Таблиця для запису в зошит (ст. 17)</div>
+
+          <div class="table-container">
+            <table class="nb-table">
+              <thead>
+                <tr>
+                  <th style="width:50%;">Спостереження</th>
+                  <th style="width:50%;">Висновки</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color:#0f172a; line-height:1.45; background:#f0fdf4;">
+                    ✏️ Запах відчувається не миттєво. Спочатку аромат мандарина відчули учні на 1-й парті біля стола вчителя, а за деякий час запах поширився по всьому класу аж до останніх парт.
+                  </td>
+                  <td style="color:#0f172a; line-height:1.45; background:#f0fdf4;">
+                    ✏️ Поширення запаху відбувається внаслідок явища <strong>дифузії</strong> — безперервного хаотичного руху молекул пахучих ефірних олій мандарина між молекулами повітря. У газах дифузія відбувається дуже швидко.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; display:flex; justify-content:space-between;">
+          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-exp1')">⬅️ Дослід 1</button>
+          <button class="btn btn-sm" onclick="goToTab('tab-exp3')">Далі: Чай ➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: ЗАВДАННЯ №3 (ЧАЙ У ХОЛОДНІЙ І ГАРЯЧІЙ ВОДІ) -->
+    <div class="tab-content" id="tab-exp3">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">🍵 Завдання № 3</h2>
+            <div class="card-subtitle">Дифузія в рідинах за різної температури</div>
+          </div>
+          <span class="action-badge" style="background:#fee2e2; color:#991b1b;">Дослід 3</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Налий в одну прозору склянку воду кімнатної температури, а в другу — гарячої води. Опусти однакові пакетики чорного чаю. Спостерігай за змінами.
+        </div>
+
+        <!-- Simulation Box -->
+        <div class="sim-box">
+          <canvas id="canvasExp3" class="sim-canvas" width="600" height="240"></canvas>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-accent" id="btnDropTea" onclick="dropTeaBags()">🍵 Опустити пакетики у воду</button>
+            <button class="btn btn-sm btn-purple" id="btnMicroscope" onclick="toggleMicroscope()">🔬 Мікроскоп частинок</button>
+            <button class="btn btn-sm btn-secondary" onclick="resetExp3()">🔄 Скинути</button>
+          </div>
+          <div id="teaStatus" class="sim-status" style="color:#b45309;">
+            Опусти чайні пакетики, щоб побачити забарвлення води!
+          </div>
+        </div>
+
+        <!-- Mini Quiz -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: За якої температури дифузія в рідині відбувається швидше?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 3)">♨️ У гарячій воді</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">❄️ У холодній воді</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">⚖️ Однаково</button>
+          </div>
+        </div>
+
+        <!-- Notebook Table -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Запитання та таблиця для зошита (ст. 18)</div>
+          
+          <div class="q-block">
+            <label class="q-label">У якій склянці вода швидше зафарбувалась? Чому?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Вода набагато швидше зафарбувалася у склянці з гарячою водою, тому що зі збільшенням температури швидкість руху молекул зростає і дифузія відбувається значно швидше.
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="nb-table">
+              <thead>
+                <tr>
+                  <th style="width:50%;">Спостереження</th>
+                  <th style="width:50%;">Висновки</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color:#0f172a; line-height:1.45; background:#f0fdf4;">
+                    ✏️ У склянці з гарячою водою забарвлення чаю з'явилося миттєво і швидко заповнило всю склянку насиченим кольором. У холодній воді заварка опускалася повільними цівками на дно, і вода зафарбовувалася дуже мляво.
+                  </td>
+                  <td style="color:#0f172a; line-height:1.45; background:#f0fdf4;">
+                    ✏️ Швидкість дифузії безпосередньо залежить від <strong>температури</strong>. У гарячій воді молекули рухаються набагато швидше і сильніше штовхають частинки чаю, тому змішування відбувається в рази інтенсивніше.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; display:flex; justify-content:space-between;">
+          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-exp2')">⬅️ Дослід 2</button>
+          <button class="btn btn-sm" onclick="goToTab('tab-exp4')">Далі: Посудини ➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: ЗАВДАННЯ №4 (ОХОЛОДЖЕННЯ ВОДИ В РІЗНИХ ПОСУДИНАХ) -->
+    <div class="tab-content" id="tab-exp4">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">🌡️ Завдання № 4</h2>
+            <div class="card-subtitle">Вплив форми посудини та площі поверхні на випаровування</div>
+          </div>
+          <span class="action-badge" style="background:#fef3c7; color:#92400e;">Дослід 4</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Налий однаковий об'єм гарячої води в три різні посудини: <em>чашку Петрі</em>, <em>хімічну склянку</em> та <em>колбу</em>. Виміряй температуру на початку і через 15 хв.
+        </div>
+
+        <!-- Simulation Box -->
+        <div class="sim-box">
+          <canvas id="canvasExp4" class="sim-canvas" width="600" height="240"></canvas>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-accent" id="btnPourHotWater" onclick="pourHotWaterExp4()">♨️ Налити гарячу воду (80°C)</button>
+            <button class="btn btn-sm btn-success" id="btnWait15mExp4" onclick="wait15mExp4()">⏳ Минуло 15 хвилин</button>
+            <button class="btn btn-sm btn-secondary" onclick="resetExp4()">🔄 Скинути</button>
+          </div>
+          <div id="vesselStatus" class="sim-status" style="color:#0369a1;">
+            Натисни «Налити гарячу воду», щоб розпочати вимірювання!
+          </div>
+        </div>
+
+        <!-- Mini Quiz -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: Де вода охолоне найшвидше?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 4)">🥣 У широкій чашці Петрі</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 4)">🧪 У вузькій колбі</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 4)">🥛 У склянці</button>
+          </div>
+        </div>
+
+        <!-- Table from Notebook -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Таблиця вимірювань для зошита (ст. 18)</div>
+
+          <div class="table-container">
+            <table class="nb-table">
+              <thead>
+                <tr>
+                  <th>Посудина</th>
+                  <th style="text-align:center;">T° на початку</th>
+                  <th style="text-align:center;">T° через 15 хв</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Чашка Петрі</strong><br><span style="font-size:11px; color:#64748b;">(дуже широка поверхня)</span></td>
+                  <td style="text-align:center; font-weight:700; color:#dc2626;">80 °C</td>
+                  <td style="text-align:center; font-weight:700; color:#0284c7; background:#e0f2fe;">28 °C</td>
+                </tr>
+                <tr>
+                  <td><strong>Хімічна склянка</strong><br><span style="font-size:11px; color:#64748b;">(середня поверхня)</span></td>
+                  <td style="text-align:center; font-weight:700; color:#dc2626;">80 °C</td>
+                  <td style="text-align:center; font-weight:700; color:#d97706; background:#fef3c7;">44 °C</td>
+                </tr>
+                <tr>
+                  <td><strong>Колба</strong><br><span style="font-size:11px; color:#64748b;">(вузьке горло)</span></td>
+                  <td style="text-align:center; font-weight:700; color:#dc2626;">80 °C</td>
+                  <td style="text-align:center; font-weight:700; color:#dc2626; background:#fee2e2;">58 °C</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">• У якій посудині температура води найменша, а в якій — найбільша?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Найменша температура води через 15 хв — у <strong>чашці Петрі</strong> (~28 °C), а найбільша (вода найдовше зберегла тепло) — у <strong>колбі</strong> (~58 °C).
+            </div>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">• Поясни, чому температура води в посудинах неоднакова. Які чинники сприяли швидшому охолодженню?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Вода охолоджується через <strong>випаровування</strong>. Швидкість випаровування залежить від <strong>площі вільної поверхні рідини</strong>. У чашці Петрі поверхня найширша — молекули вилітають найшвидше, забираючи із собою тепло. У колбі горлечко вузьке, випаровування ускладнене, тому вода довго зберігає тепло.
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; display:flex; justify-content:space-between;">
+          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-exp3')">⬅️ Дослід 3</button>
+          <button class="btn btn-sm" onclick="goToTab('tab-exp5')">Далі: Пластилін ➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: ЗАВДАННЯ №5 (ПЛАСТИЛІН - ДИФУЗІЯ У ТВЕРДИХ ТІЛАХ) -->
+    <div class="tab-content" id="tab-exp5">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">🧱 Завдання № 5</h2>
+            <div class="card-subtitle">Дифузія у твердих тілах (пластилін)</div>
+          </div>
+          <span class="action-badge" style="background:#e0e7ff; color:#3730a3;">Дослід 5</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Поклади два шматочки пластиліну різного кольору один на одний. Через 15 хв роз'єднай їх. Опиши свої спостереження.
+        </div>
+
+        <!-- Simulation Box -->
+        <div class="sim-box">
+          <canvas id="canvasExp5" class="sim-canvas" width="600" height="240"></canvas>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-secondary" id="btnJoinClay" onclick="joinClay()">🤝 З'єднати шматочки</button>
+            <button class="btn btn-sm btn-accent" id="btnSeparateClay" onclick="separateClay()">✂️ Роз'єднати через 15 хв</button>
+            <button class="btn btn-sm btn-success" id="btnKneadClay" onclick="kneadClay()">🔥 Нагріти й розім'яти!</button>
+          </div>
+          <div id="clayStatus" class="sim-status" style="color:#4338ca;">
+            Натисни «З'єднати шматочки», щоб перевірити дифузію у твердих тілах!
+          </div>
+        </div>
+
+        <!-- Mini Quiz -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: Чи відбулася помітна дифузія у твердому пластиліні за 15 хв без нагрівання?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 5)">🚫 Ні, межа чітка</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 5)">✅ Так, кольори злилися</button>
+          </div>
+        </div>
+
+        <!-- Notebook questions -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Записи у зошит (ст. 18)</div>
+
+          <div class="q-block">
+            <label class="q-label">Спостереження (після роз'єднання шматочків):</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Шматочки пластиліну легко роз'єдналися. На межі дотику кольори залишилися чіткими і не проникли один в один. Дифузії за 15 хвилин при кімнатній температурі не помітно.
+            </div>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">Яким чином можна пришвидшити процес дифузії?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Дифузію у твердих тілах можна пришвидшити <strong>нагріванням</strong> (тепло пальців), <strong>сильним тиском</strong> або <strong>механічним перемішуванням</strong> (розім'яти пластилін руками).
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; display:flex; justify-content:space-between;">
+          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-exp4')">⬅️ Дослід 4</button>
+          <button class="btn btn-sm btn-accent" onclick="goToTab('tab-summary')">Перейти до Висновків 🏆</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: ЗАГАЛЬНИЙ ВИСНОВОК РОБОТИ -->
+    <div class="tab-content" id="tab-summary">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">🏆 Загальний висновок роботи</h2>
+            <div class="card-subtitle">Підсумок усіх дослідів для запису в зошит</div>
+          </div>
+        </div>
+
+        <div class="tip-box" style="background:#f0fdf4; border-color:#22c55e; color:#15803d;">
+          🎉 <strong>Чудова робота!</strong> Усі 5 дослідів успішно виконано. Тепер узагальнимо відкриті нами закони природи про дифузію та випаровування!
+        </div>
+
+        <!-- Interactive Summary Cards -->
+        <div style="background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px;">
+          <h3 style="font-size:15px; font-weight:800; color:#1e293b; margin-bottom:10px;">💡 Головні закони природи, які ми відкрили:</h3>
+
+          <div style="font-size:13px; line-height:1.6; color:#334155;">
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:10px 12px; margin-bottom:10px;">
+              <strong style="color:#15803d;">🔹 1. Швидкість випаровування залежить від:</strong><br>
+              • <em>Роду рідини:</em> спирт випаровується швидше за воду, бо зв'язки між його молекулами слабші;<br>
+              • <em>Площі вільної поверхні:</em> у широкій чашці Петрі рідина випарувалася й охолола найшвидше;<br>
+              • <em>Температури:</em> чим тепліша рідина, тим більше молекул мають енергію вилетіти у повітря.
+            </div>
+
+            <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 12px;">
+              <strong style="color:#1d4ed8;">🔹 2. Швидкість дифузії залежить від:</strong><br>
+              • <em>Агрегатного стану:</em> найшвидше — у газах (запах мандарина), повільніше — у рідинах (чай), практично непомітно за короткий час — у твердих тілах (пластилін);<br>
+              • <em>Температури:</em> із підвищенням температури рух молекул прискорюється, тому дифузія відбувається значно швидше (чай у гарячій воді заварився миттєво).
+            </div>
+          </div>
+        </div>
+
+        <!-- Notebook Text Block -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Текст для запису у висновок практичної роботи</div>
+          <div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:12px 14px; font-size:14px; line-height:1.6; color:#0f172a;" id="conclusionText">
+            Виконуючи практичну роботу, ми з'ясували, що випаровування та дифузія зумовлені неперервним хаотичним рухом молекул. Швидкість випаровування залежить від роду рідини та площі її вільної поверхні. Швидкість дифузії залежить від агрегатного стану речовини (найшвидше протікає в газах, повільніше в рідинах і практично непомітна у твердих тілах) та температури: із нагріванням швидкість руху частинок зростає, тому процес дифузії суттєво прискорюється.
+          </div>
+          <div style="margin-top:12px; display:flex; gap:8px;">
+            <button class="btn btn-sm btn-secondary" onclick="copyConclusion()">📋 Скопіювати текст</button>
+            <button class="btn btn-sm btn-accent" onclick="window.print()">🖨️ Роздрукувати / Зберегти PDF</button>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; text-align:center;">
+          <button class="btn btn-secondary" onclick="goToTab('tab-intro')">🔄 Повернутися на початок</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation Bar for Mobile -->
+  <nav class="bottom-bar">
+    <button class="btn btn-sm btn-secondary" id="btnPrevTab" onclick="navStep(-1)">⬅️ Попередня</button>
+    <div style="font-size:13px; font-weight:800; color:var(--text-muted);" id="currentStepIndicator">Крок 1 з 7</div>
+    <button class="btn btn-sm btn-accent" id="btnNextTab" onclick="navStep(1)">Наступна ➡️</button>
+  </nav>
+
+  <!-- Modal for Original Notebook Scans -->
+  <div class="modal-backdrop" id="scanModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">📖 Сторінки друкованого зошита</h3>
+        <button class="close-btn" onclick="closeScanModal()">✕</button>
+      </div>
+      <div style="display:flex; gap:8px; margin-bottom:12px;">
+        <button class="btn btn-sm btn-secondary" style="flex:1;" onclick="showScanPage(17)">Сторінка 17</button>
+        <button class="btn btn-sm btn-secondary" style="flex:1;" onclick="showScanPage(18)">Сторінка 18</button>
+      </div>
+      <img id="modalScanImg" src="page_17.jpg" alt="Сторінка зошита" class="modal-image">
+      <p style="font-size:12px; text-align:center; color:#64748b;">
+        Перегляд оригінальних сторінок для звірки із паперовим зошитом учня.
+      </p>
+    </div>
+  </div>
+
+  <!-- Modal for Experiment Video -->
+  <div class="modal-backdrop" id="videoModal">
+    <div class="modal-content" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🎬 Відео практичної роботи</h3>
+        <button class="close-btn" onclick="closeVideoModal()">✕</button>
+      </div>
+      <video id="videoPlayer" controls style="width:100%; border-radius:12px; background:#000; margin-bottom:10px;" preload="metadata">
+        <source src="../Відео/13 Практична робота № 2 Спостереження явищ дифузії та випаровування.mp4" type="video/mp4">
+        Ваш браузер не підтримує відтворення відео.
+      </video>
+      <p style="font-size:12px; color:#475569; text-align:center;">
+        Відеозапис дослідів до уроку №13 (дифузія та випаровування).
+      </p>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    // Audio synthesizer for interactive clicks, bubbles, bells, fanfare
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
+
+        if (type === 'pop') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(450, now);
+          osc.frequency.exponentialRampToValueAtTime(850, now + 0.08);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === 'bubble') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(280, now);
+          osc.frequency.exponentialRampToValueAtTime(650, now + 0.12);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+          osc.start(now);
+          osc.stop(now + 0.12);
+        } else if (type === 'ding') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, now); // D5
+          osc.frequency.setValueAtTime(880, now + 0.08); // A5
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+          osc.start(now);
+          osc.stop(now + 0.35);
+        } else if (type === 'fanfare') {
+          // 3 ascending notes
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.connect(g);
+            g.connect(audioCtx.destination);
+            o.frequency.setValueAtTime(freq, now + i * 0.1);
+            g.gain.setValueAtTime(0.18, now + i * 0.1);
+            g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.25);
+            o.start(now + i * 0.1);
+            o.stop(now + i * 0.1 + 0.25);
+          });
+        }
+      } catch (e) {
+        console.warn('Audio not available:', e);
+      }
+    }
+
+    // Toggle sound
+    document.getElementById('btnSoundToggle').addEventListener('click', function() {
+      soundEnabled = !soundEnabled;
+      this.textContent = soundEnabled ? '🔊' : '🔇';
+      if (soundEnabled) playSound('pop');
+    });
+
+    // Achievements tracking
+    const unlockedStars = new Set();
+    function unlockStar(expNum) {
+      if (!unlockedStars.has(expNum)) {
+        unlockedStars.add(expNum);
+        playSound('ding');
+      }
+    }
+
+    // Mini-quiz validation
+    function checkQuiz(btn, isCorrect, expNum) {
+      if (isCorrect) {
+        playSound('ding');
+        btn.classList.add('correct');
+        btn.innerHTML += ' ✅ Правильно!';
+        unlockStar(expNum);
+      } else {
+        playSound('pop');
+        btn.classList.add('wrong');
+      }
+    }
+
+    // Navigation & Tabs
+    const tabs = ['tab-intro', 'tab-exp1', 'tab-exp2', 'tab-exp3', 'tab-exp4', 'tab-exp5', 'tab-summary'];
+    let currentTabIndex = 0;
+
+    function goToTab(tabId) {
+      playSound('pop');
+      const idx = tabs.indexOf(tabId);
+      if (idx !== -1) currentTabIndex = idx;
+
+      // Update pills
+      document.querySelectorAll('.step-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      });
+
+      // Update contents
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.id === tabId);
+      });
+
+      // Update bottom progress & indicator
+      const progressPercent = Math.round(((currentTabIndex + 1) / tabs.length) * 100);
+      document.getElementById('progressBarFill').style.width = `${progressPercent}%`;
+      document.getElementById('currentStepIndicator').textContent = `Крок ${currentTabIndex + 1} з ${tabs.length}`;
+      document.getElementById('btnPrevTab').style.visibility = currentTabIndex === 0 ? 'hidden' : 'visible';
+      document.getElementById('btnNextTab').textContent = currentTabIndex === tabs.length - 1 ? 'Завершити 🎉' : 'Наступна ➡️';
+
+      // Redraw canvases with proper sizes
+      requestAnimationFrame(() => {
+        if (tabId === 'tab-exp1') drawExp1();
+        if (tabId === 'tab-exp2') initExp2();
+        if (tabId === 'tab-exp3') initExp3();
+        if (tabId === 'tab-exp4') drawExp4();
+        if (tabId === 'tab-exp5') drawExp5();
+      });
+    }
+
+    function navStep(direction) {
+      const nextIndex = currentTabIndex + direction;
+      if (nextIndex >= 0 && nextIndex < tabs.length) {
+        goToTab(tabs[nextIndex]);
+      }
+    }
+
+    document.querySelectorAll('.step-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        goToTab(pill.getAttribute('data-tab'));
+      });
+    });
+
+    // Equipment checklist
+    function toggleEquip(item) {
+      playSound('pop');
+      item.classList.toggle('checked');
+    }
+
+    // Modal Scans
+    const scanModal = document.getElementById('scanModal');
+    const modalScanImg = document.getElementById('modalScanImg');
+    const btnScanModal = document.getElementById('btnScanModal');
+    if (btnScanModal) {
+      btnScanModal.addEventListener('click', () => {
+        playSound('pop');
+        scanModal.classList.add('open');
+      });
+    }
+    function closeScanModal() {
+      scanModal.classList.remove('open');
+    }
+    function showScanPage(pg) {
+      playSound('pop');
+      modalScanImg.src = pg === 17 ? 'page_17.jpg' : 'page_18.jpg';
+    }
+
+    // Modal Video
+    const videoModal = document.getElementById('videoModal');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const btnVideoModal = document.getElementById('btnVideoModal');
+    if (btnVideoModal) {
+      btnVideoModal.addEventListener('click', () => {
+        playSound('pop');
+        videoModal.classList.add('open');
+      });
+    }
+    function closeVideoModal() {
+      videoModal.classList.remove('open');
+      if (videoPlayer) videoPlayer.pause();
+    }
+
+    function copyConclusion() {
+      playSound('ding');
+      const text = document.getElementById('conclusionText').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Текст висновку скопійовано! Можна вставити в зошит.');
+      }).catch(() => {
+        alert('Виділіть та скопіюйте текст вручну.');
+      });
+    }
+
+    /* =========================================================================
+       HELPER: High-DPI Canvas Setup
+       ========================================================================= */
+    function getContextScaled(canvas, defaultH = 205) {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = canvas.getBoundingClientRect();
+      const cssW = rect.width > 50 ? rect.width : (window.innerWidth < 500 ? window.innerWidth - 20 : 580);
+      const cssH = rect.height > 50 ? rect.height : defaultH;
+      if (canvas.width !== Math.round(cssW * dpr) || canvas.height !== Math.round(cssH * dpr)) {
+        canvas.width = Math.round(cssW * dpr);
+        canvas.height = Math.round(cssH * dpr);
+      }
+      const ctx = canvas.getContext('2d');
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      return { ctx, w: cssW, h: cssH };
+    }
+
+    /* =========================================================================
+       EXPERIMENT 1: СПИРТ vs ВОДА (CANVAS VISUALIZATION)
+       ========================================================================= */
+    const canvas1 = document.getElementById('canvasExp1');
+    let exp1State = {
+      wetted: false,
+      microscope: false,
+      waterWetness: 0,
+      alcoholWetness: 0,
+      particles: [],
+      droplets: []
+    };
+
+    function drawExp1() {
+      const { ctx, w, h } = getContextScaled(canvas1, 230);
+      ctx.clearRect(0, 0, w, h);
+
+      // Background Lab Table
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, '#f8fafc');
+      grad.addColorStop(1, '#f1f5f9');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      if (exp1State.microscope) {
+        drawExp1Microscope(ctx, w, h);
+        return;
+      }
+
+      const p1x = w * 0.28;
+      const p2x = w * 0.72;
+      const py = h * 0.62;
+
+      // 1. Draw Lab Plates with soft shadows
+      [p1x, p2x].forEach((px, i) => {
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.06)';
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetY = 4;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.ellipse(px, py, 75, 28, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Inner plate rim
+        ctx.beginPath();
+        ctx.ellipse(px, py, 60, 20, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.stroke();
+      });
+
+      // 2. Fabric Swatches
+      const fw = 70;
+      const fh = 42;
+      const fy = py - 20;
+
+      // Cloth 1: Water
+      const fx1 = p1x - fw/2;
+      let wBg = '#f8fafc';
+      let wBorder = '#cbd5e1';
+      if (exp1State.wetted) {
+        wBg = exp1State.waterWetness > 0.4 ? '#bae6fd' : '#e0f2fe';
+        wBorder = '#38bdf8';
+      }
+      ctx.fillStyle = wBg;
+      ctx.fillRect(fx1, fy, fw, fh);
+      ctx.strokeStyle = wBorder;
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(fx1, fy, fw, fh);
+
+      // Weave pattern
+      ctx.strokeStyle = exp1State.wetted && exp1State.waterWetness > 0.4 ? '#7dd3fc' : '#e2e8f0';
+      ctx.lineWidth = 1;
+      for (let x = fx1 + 8; x < fx1 + fw; x += 10) {
+        ctx.beginPath(); ctx.moveTo(x, fy); ctx.lineTo(x, fy + fh); ctx.stroke();
+      }
+
+      // Cloth 2: Alcohol
+      const fx2 = p2x - fw/2;
+      let aBg = '#f8fafc';
+      let aBorder = '#cbd5e1';
+      if (exp1State.wetted) {
+        aBg = exp1State.alcoholWetness > 0.1 ? '#f5d0fe' : '#ffffff';
+        aBorder = exp1State.alcoholWetness > 0.1 ? '#c084fc' : '#cbd5e1';
+      }
+      ctx.fillStyle = aBg;
+      ctx.fillRect(fx2, fy, fw, fh);
+      ctx.strokeStyle = aBorder;
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(fx2, fy, fw, fh);
+
+      ctx.strokeStyle = exp1State.wetted && exp1State.alcoholWetness > 0.1 ? '#e879f9' : '#e2e8f0';
+      for (let x = fx2 + 8; x < fx2 + fw; x += 10) {
+        ctx.beginPath(); ctx.moveTo(x, fy); ctx.lineTo(x, fy + fh); ctx.stroke();
+      }
+
+      // 3. Titles & Badges
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 13px system-ui';
+      ctx.fillStyle = '#0369a1';
+      ctx.fillText('💧 Тарілка 1: ВОДА', p1x, 26);
+      ctx.font = '11px system-ui';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('(Густина й молекули H₂O)', p1x, 40);
+
+      ctx.font = 'bold 13px system-ui';
+      ctx.fillStyle = '#86198f';
+      ctx.fillText('🧪 Тарілка 2: СПИРТ', p2x, 26);
+      ctx.font = '11px system-ui';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('(Леткі молекули спирту)', p2x, 40);
+
+      // 4. Moisture Meters (Mini-Bars)
+      drawMoistureBar(ctx, p1x, py + 36, exp1State.waterWetness, '#0284c7', 'Вода');
+      drawMoistureBar(ctx, p2x, py + 36, exp1State.alcoholWetness, '#9333ea', 'Спирт');
+
+      // 5. Draw falling droplets
+      exp1State.droplets.forEach(d => {
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = d.color;
+        ctx.fill();
+        d.y += 6;
+      });
+      exp1State.droplets = exp1State.droplets.filter(d => d.y < py - 10);
+
+      // 6. Draw vapor molecules flying
+      exp1State.particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+        p.y -= p.speed;
+        p.x += Math.sin(p.y * 0.08) * 0.8;
+        p.alpha -= 0.015;
+      });
+      exp1State.particles = exp1State.particles.filter(p => p.alpha > 0);
+
+      if (exp1State.particles.length > 0 || exp1State.droplets.length > 0) {
+        requestAnimationFrame(drawExp1);
+      }
+    }
+
+    function drawMoistureBar(ctx, x, y, val, color, label) {
+      const bw = 90;
+      const bh = 10;
+      ctx.fillStyle = '#e2e8f0';
+      ctx.beginPath();
+      ctx.roundRect(x - bw/2, y, bw, bh, 5);
+      ctx.fill();
+
+      if (val > 0) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.roundRect(x - bw/2, y, bw * val, bh, 5);
+        ctx.fill();
+      }
+
+      ctx.font = 'bold 11px system-ui';
+      ctx.fillStyle = '#334155';
+      const pct = Math.round(val * 100);
+      let desc = pct === 0 ? '✨ СУХИЙ (0%)' : (pct >= 90 ? '💦 Мокрий (100%)' : `💧 Вологий (${pct}%)`);
+      ctx.fillText(desc, x, y + 24);
+    }
+
+    function drawExp1Microscope(ctx, w, h) {
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, w, h);
+
+      const m1x = w * 0.28;
+      const m2x = w * 0.72;
+      const my = h * 0.52;
+      const r = 58;
+
+      // Circle 1: Water
+      ctx.beginPath();
+      ctx.arc(m1x, my, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#1e293b';
+      ctx.fill();
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Circle 2: Alcohol
+      ctx.beginPath();
+      ctx.arc(m2x, my, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#1e293b';
+      ctx.fill();
+      ctx.strokeStyle = '#c084fc';
+      ctx.stroke();
+
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 12px system-ui';
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('МОЛЕКУЛИ ВОДИ (H₂O)', m1x, 26);
+      ctx.font = '10px system-ui';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('Міцні водневі зв\'язки (тримаються купи)', m1x, 40);
+
+      ctx.font = 'bold 12px system-ui';
+      ctx.fillStyle = '#c084fc';
+      ctx.fillText('МОЛЕКУЛИ СПИРТУ', m2x, 26);
+      ctx.font = '10px system-ui';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('Слабкі сили (легко вилітають у повітря)', m2x, 40);
+
+      // Animate molecules inside
+      const t = Date.now() * 0.003;
+      // Water: tight cluster
+      for (let i = 0; i < 9; i++) {
+        const ang = (i / 9) * Math.PI * 2 + t * 0.3;
+        const dist = 24 + Math.sin(t + i) * 6;
+        const mx = m1x + Math.cos(ang) * dist;
+        const my_ = my + Math.sin(ang) * dist;
+        ctx.beginPath();
+        ctx.arc(mx, my_, 6, 0, Math.PI * 2);
+        ctx.fillStyle = '#38bdf8';
+        ctx.fill();
+      }
+
+      // Alcohol: flying freely outward
+      for (let i = 0; i < 9; i++) {
+        const ang = (i / 9) * Math.PI * 2 + t * 1.2;
+        const dist = (i * 6 + t * 25) % (r - 10);
+        const mx = m2x + Math.cos(ang) * dist;
+        const my_ = my + Math.sin(ang) * dist;
+        ctx.beginPath();
+        ctx.arc(mx, my_, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#e879f9';
+        ctx.fill();
+      }
+
+      ctx.font = '11px system-ui';
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillText('Натисніть «Погляд на молекули», щоб повернутися до тарілок', w/2, h - 12);
+
+      if (exp1State.microscope) {
+        requestAnimationFrame(drawExp1);
+      }
+    }
+
+    function wetCloths() {
+      playSound('bubble');
+      exp1State.wetted = true;
+      exp1State.waterWetness = 1.0;
+      exp1State.alcoholWetness = 1.0;
+      document.getElementById('clothStatus').innerHTML = '💧 <strong>Клаптики змочено!</strong> Спирт уже починає летіти у повітря швидше за воду.';
+
+      // Drop droplets
+      for (let i = 0; i < 8; i++) {
+        exp1State.droplets.push({ x: canvas1.width * 0.14 + (Math.random() - 0.5) * 40, y: 30 + i * 8, color: '#38bdf8' });
+        exp1State.droplets.push({ x: canvas1.width * 0.36 + (Math.random() - 0.5) * 40, y: 30 + i * 8, color: '#c084fc' });
+      }
+
+      // Spawn initial vapor
+      for (let i = 0; i < 35; i++) {
+        exp1State.particles.push({
+          x: canvas1.width * 0.36 + (Math.random() - 0.5) * 50,
+          y: 130,
+          speed: 1.5 + Math.random() * 2,
+          r: 2.5,
+          color: '#c084fc',
+          alpha: 0.9
+        });
+      }
+      drawExp1();
+    }
+
+    function pass15MinExp1() {
+      if (!exp1State.wetted) wetCloths();
+      playSound('ding');
+      exp1State.waterWetness = 0.65; // Still very wet
+      exp1State.alcoholWetness = 0.0;  // Completely dry!
+      unlockStar(1);
+      document.getElementById('clothStatus').innerHTML = '⏱️ <strong>Минуло 15 хв:</strong> Спирт висох на 100%! Вода все ще волога (65%).';
+
+      // Big burst of evaporating alcohol
+      for (let i = 0; i < 60; i++) {
+        exp1State.particles.push({
+          x: canvas1.width * 0.36 + (Math.random() - 0.5) * 60,
+          y: 130,
+          speed: 2 + Math.random() * 2.5,
+          r: 3,
+          color: '#e879f9',
+          alpha: 0.95
+        });
+      }
+      drawExp1();
+    }
+
+    function toggleMicroscopeExp1() {
+      playSound('pop');
+      exp1State.microscope = !exp1State.microscope;
+      document.getElementById('btnMicroscopeExp1').textContent = exp1State.microscope ? '🍽️ Звичайний вигляд' : '🔬 Погляд на молекули';
+      drawExp1();
+    }
+
+    function resetExp1() {
+      playSound('pop');
+      exp1State = { wetted: false, microscope: false, waterWetness: 0, alcoholWetness: 0, particles: [], droplets: [] };
+      document.getElementById('btnMicroscopeExp1').textContent = '🔬 Погляд на молекули';
+      document.getElementById('clothStatus').textContent = 'Натисніть «Змочити клаптики», щоб розпочати дослід!';
+      drawExp1();
+    }
+
+    /* =========================================================================
+       EXPERIMENT 2: МАНДАРИН (CLASSROOM DIFFUSION)
+       ========================================================================= */
+    const canvas2 = document.getElementById('canvasExp2');
+    let exp2State = {
+      peeled: false,
+      temp: 22,
+      particles: [],
+      airMolecules: [],
+      animId: null
+    };
+
+    function initExp2() {
+      if (exp2State.airMolecules.length === 0) {
+        for (let i = 0; i < 40; i++) {
+          exp2State.airMolecules.push({
+            x: Math.random() * 550,
+            y: Math.random() * 200,
+            vx: (Math.random() - 0.5) * 0.6,
+            vy: (Math.random() - 0.5) * 0.6
+          });
+        }
+      }
+      drawExp2();
+    }
+
+    function drawExp2() {
+      const { ctx, w, h } = getContextScaled(canvas2, 240);
+      ctx.clearRect(0, 0, w, h);
+
+      // Classroom Floor
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, w, h);
+
+      // Student desks in rows
+      const rows = [
+        { label: 'Парта 1 (1.5 м)', y: 80, student: '👧 Оля', time: '3 сек' },
+        { label: 'Парта 2 (4.0 м)', y: 140, student: '👦 Тарас', time: '8 сек' },
+        { label: 'Парта 3 (7.0 м)', y: 195, student: '🧒 Артем', time: '16 сек' }
+      ];
+
+      // Teacher Desk (Left)
+      const tx = w * 0.16;
+      const ty = h * 0.5;
+
+      // Draw Teacher Desk
+      ctx.fillStyle = '#e2e8f0';
+      ctx.beginPath();
+      ctx.roundRect(tx - 40, ty - 35, 80, 70, 10);
+      ctx.fill();
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 11px system-ui';
+      ctx.fillStyle = '#475569';
+      ctx.fillText('Стіл вчителя', tx, ty - 18);
+
+      // Mandarin icon
+      ctx.font = '28px system-ui';
+      ctx.fillText(exp2State.peeled ? '🍊' : '🟠', tx, ty + 16);
+
+      // Background air molecules (nitrogen/oxygen)
+      ctx.fillStyle = '#cbd5e1';
+      const speedFactor = (exp2State.temp / 20);
+      exp2State.airMolecules.forEach(m => {
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+        m.x += m.vx * speedFactor;
+        m.y += m.vy * speedFactor;
+        if (m.x < 10 || m.x > w - 10) m.vx *= -1;
+        if (m.y < 10 || m.y > h - 10) m.vy *= -1;
+      });
+
+      // Draw student desks
+      const dx = w * 0.72;
+      rows.forEach((r, idx) => {
+        // Count nearby orange particles
+        let nearCount = exp2State.particles.filter(p => Math.abs(p.y - r.y) < 28 && p.x > dx - 85).length;
+        const reached = nearCount >= 6;
+
+        ctx.fillStyle = reached ? '#ecfdf5' : '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect(dx - 80, r.y - 18, 160, 36, 10);
+        ctx.fill();
+        ctx.strokeStyle = reached ? '#10b981' : '#cbd5e1';
+        ctx.lineWidth = reached ? 2 : 1;
+        ctx.stroke();
+
+        ctx.font = reached ? 'bold 12px system-ui' : '11px system-ui';
+        ctx.fillStyle = reached ? '#065f46' : '#334155';
+        ctx.fillText(reached ? `👃 Відчули запах! (${r.student})` : `${r.student} • ${r.label}`, dx, r.y + 4);
+      });
+
+      // Draw aroma particles (diffusing orange spheres)
+      exp2State.particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = '#f97316';
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+
+        p.x += (p.vx + (Math.random() - 0.47) * 2.2) * speedFactor;
+        p.y += (p.vy + (Math.random() - 0.5) * 2.2) * speedFactor;
+
+        if (p.x < 5 || p.x > w - 5) p.vx *= -1;
+        if (p.y < 5 || p.y > h - 5) p.vy *= -1;
+      });
+
+      if (exp2State.peeled && exp2State.particles.length < 220) {
+        exp2State.particles.push({
+          x: tx + 10,
+          y: ty + 5 + (Math.random() - 0.5) * 15,
+          vx: 1.0 + Math.random() * 2.0,
+          vy: (Math.random() - 0.5) * 2.0,
+          size: 2.5 + Math.random() * 2.5,
+          alpha: 0.8 + Math.random() * 0.2
+        });
+      }
+
+      if (exp2State.peeled) {
+        exp2State.animId = requestAnimationFrame(drawExp2);
+      }
+    }
+
+    function peelMandarin() {
+      playSound('pop');
+      exp2State.peeled = true;
+      unlockStar(2);
+      document.getElementById('mandarinStatus').innerHTML = '🍊 <strong>Мандарин очищено!</strong> Молекули ефірних олій дифундують у повітрі від столу до парт.';
+      if (!exp2State.animId) drawExp2();
+    }
+
+    function updateRoomTemp(val) {
+      exp2State.temp = parseInt(val, 10);
+      document.getElementById('roomTempVal').textContent = val + '°C';
+      if (exp2State.temp >= 30) {
+        document.getElementById('mandarinStatus').innerHTML = `🔥 При <strong>${val}°C</strong> дифузія стрімка: гаряче повітря прискорює молекули запаху!`;
+      } else if (exp2State.temp <= 14) {
+        document.getElementById('mandarinStatus').innerHTML = `❄️ При <strong>${val}°C</strong> молекули рухаються повільніше, дифузія затримується.`;
+      }
+    }
+
+    function resetExp2() {
+      playSound('pop');
+      if (exp2State.animId) cancelAnimationFrame(exp2State.animId);
+      exp2State.peeled = false;
+      exp2State.particles = [];
+      exp2State.animId = null;
+      document.getElementById('mandarinStatus').textContent = 'Клас провітрено. Натисніть «Очистити мандарин», щоб розпочати знову.';
+      drawExp2();
+    }
+
+    /* =========================================================================
+       EXPERIMENT 3: ЧАЙ (ДИФУЗІЯ В РІДИНАХ ЗА T°)
+       ========================================================================= */
+    const canvas3 = document.getElementById('canvasExp3');
+    let exp3State = {
+      teaDropped: false,
+      microscope: false,
+      hotParticles: [],
+      coldParticles: [],
+      animId: null
+    };
+
+    function initExp3() {
+      drawExp3();
+    }
+
+    function drawExp3() {
+      const { ctx, w, h } = getContextScaled(canvas3, 240);
+      ctx.clearRect(0, 0, w, h);
+
+      if (exp3State.microscope) {
+        drawMicroscopeView(ctx, w, h);
+        if (exp3State.teaDropped) {
+          exp3State.animId = requestAnimationFrame(drawExp3);
+        }
+        return;
+      }
+
+      const b1x = w * 0.28;
+      const b2x = w * 0.72;
+      const bw = 96;
+      const bh = 130;
+      const by = 60;
+
+      // 1. Draw Glass Beakers with nice liquid gradients
+      // Beaker 1: Cold (15°C)
+      ctx.fillStyle = '#e0f2fe';
+      ctx.beginPath();
+      ctx.roundRect(b1x - bw/2, by, bw, bh, [0, 0, 12, 12]);
+      ctx.fill();
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Beaker 2: Hot (85°C)
+      ctx.fillStyle = '#fee2e2';
+      ctx.beginPath();
+      ctx.roundRect(b2x - bw/2, by, bw, bh, [0, 0, 12, 12]);
+      ctx.fill();
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Titles
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 13px system-ui';
+      ctx.fillStyle = '#0369a1';
+      ctx.fillText('❄️ ХОЛОДНА ВОДА (15°C)', b1x, 32);
+
+      ctx.fillStyle = '#b91c1c';
+      ctx.fillText('♨️ ГАРЯЧА ВОДА (85°C)', b2x, 32);
+
+      // Steam over hot beaker
+      if (exp3State.teaDropped) {
+        drawBillowingSteam(ctx, b2x, by - 6);
+      }
+
+      // Tea Bags & Particles
+      if (exp3State.teaDropped) {
+        // Tea Bags
+        drawTeaBag(ctx, b1x, by + 12);
+        drawTeaBag(ctx, b2x, by + 12);
+
+        // Cold particles: stay mostly sluggish at the bottom
+        exp3State.coldParticles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = '#b45309';
+          ctx.globalAlpha = p.alpha;
+          ctx.fill();
+          p.y += p.vy;
+          p.x += (Math.random() - 0.5) * 0.4;
+          if (p.y > by + bh - 6) p.y = by + bh - 6;
+        });
+
+        // Hot particles: move rapidly, swirling up and filling whole beaker
+        exp3State.hotParticles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = '#78350f';
+          ctx.globalAlpha = p.alpha;
+          ctx.fill();
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < b2x - bw/2 + 6 || p.x > b2x + bw/2 - 6) p.vx *= -1;
+          if (p.y < by + 6 || p.y > by + bh - 6) p.vy *= -1;
+        });
+        ctx.globalAlpha = 1.0;
+
+        // Bottom status under beakers
+        ctx.font = 'bold 11px system-ui';
+        ctx.fillStyle = '#0369a1';
+        ctx.fillText('Повільна дифузія (вода світла)', b1x, by + bh + 24);
+        ctx.fillStyle = '#991b1b';
+        ctx.fillText('Швидка дифузія (темний чай)', b2x, by + bh + 24);
+      } else {
+        ctx.font = '12px system-ui';
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText('Пакетик ще не опущено', b1x, by + bh/2);
+        ctx.fillText('Пакетик ще не опущено', b2x, by + bh/2);
+      }
+
+      if (exp3State.teaDropped) {
+        exp3State.animId = requestAnimationFrame(drawExp3);
+      }
+    }
+
+    function drawTeaBag(ctx, x, y) {
+      // string
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - 22, y - 24);
+      ctx.stroke();
+
+      // tag
+      ctx.fillStyle = '#ef4444';
+      ctx.fillRect(x - 28, y - 32, 12, 10);
+
+      // bag
+      ctx.fillStyle = '#d97706';
+      ctx.fillRect(x - 14, y, 28, 34);
+      ctx.strokeStyle = '#78350f';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x - 14, y, 28, 34);
+    }
+
+    function drawBillowingSteam(ctx, x, y) {
+      const now = Date.now() * 0.003;
+      ctx.fillStyle = 'rgba(226, 232, 240, 0.5)';
+      for (let i = 0; i < 3; i++) {
+        const sx = x + Math.sin(now + i * 2) * 14;
+        const sy = y - (now * 12 + i * 15) % 35;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 7 + i * 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawMicroscopeView(ctx, w, h) {
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, w, h);
+
+      const m1x = w * 0.28;
+      const m2x = w * 0.72;
+      const my = h * 0.55;
+      const mr = 60;
+
+      // Circle lens 1: Cold
+      ctx.beginPath();
+      ctx.arc(m1x, my, mr, 0, Math.PI * 2);
+      ctx.fillStyle = '#1e293b';
+      ctx.fill();
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Circle lens 2: Hot
+      ctx.beginPath();
+      ctx.arc(m2x, my, mr, 0, Math.PI * 2);
+      ctx.fillStyle = '#1e293b';
+      ctx.fill();
+      ctx.strokeStyle = '#f87171';
+      ctx.stroke();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 12px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText('Холодна (повільні частинки)', m1x, 26);
+
+      ctx.fillStyle = '#f87171';
+      ctx.fillText('Гаряча (шалений швидкий рух!)', m2x, 26);
+
+      // Draw active bouncing molecules inside circles
+      const now = Date.now() * 0.005;
+      for (let i = 0; i < 16; i++) {
+        // Cold (slow drift)
+        const a1 = (i / 16) * Math.PI * 2 + now * 0.25;
+        const d1 = (mr - 14) * Math.abs(Math.sin(i * 3 + now * 0.15));
+        ctx.beginPath();
+        ctx.arc(m1x + Math.cos(a1) * d1, my + Math.sin(a1) * d1, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#93c5fd';
+        ctx.fill();
+
+        // Hot (super fast bounce)
+        const a2 = (i / 16) * Math.PI * 2 + now * 2.0;
+        const d2 = (mr - 12) * Math.abs(Math.sin(i * 7 + now * 1.4));
+        ctx.beginPath();
+        ctx.arc(m2x + Math.cos(a2) * d2, my + Math.sin(a2) * d2, 4.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#fb923c';
+        ctx.fill();
+      }
+    }
+
+    function dropTeaBags() {
+      playSound('bubble');
+      exp3State.teaDropped = true;
+      unlockStar(3);
+      document.getElementById('teaStatus').innerHTML = '🍵 <strong>Пакетики опущено!</strong> У гарячій воді заварка миттєво дифундує по всій склянці.';
+
+      const b1x = canvas3.width * 0.14;
+      const b2x = canvas3.width * 0.36;
+      const by = 60;
+
+      exp3State.coldParticles = [];
+      exp3State.hotParticles = [];
+
+      for (let i = 0; i < 70; i++) {
+        exp3State.coldParticles.push({
+          x: b1x + (Math.random() - 0.5) * 25,
+          y: by + 45 + Math.random() * 20,
+          vy: 0.25 + Math.random() * 0.45,
+          r: 2.5,
+          alpha: 0.75
+        });
+      }
+
+      for (let i = 0; i < 150; i++) {
+        exp3State.hotParticles.push({
+          x: b2x + (Math.random() - 0.5) * 35,
+          y: by + 30 + Math.random() * 40,
+          vx: (Math.random() - 0.5) * 3.8,
+          vy: (Math.random() - 0.5) * 3.8,
+          r: 3.0,
+          alpha: 0.85
+        });
+      }
+
+      drawExp3();
+    }
+
+    function toggleMicroscope() {
+      playSound('pop');
+      exp3State.microscope = !exp3State.microscope;
+      document.getElementById('btnMicroscope').textContent = exp3State.microscope ? '🥛 Звичайний вигляд' : '🔬 Мікроскоп частинок';
+      drawExp3();
+    }
+
+    function resetExp3() {
+      playSound('pop');
+      if (exp3State.animId) cancelAnimationFrame(exp3State.animId);
+      exp3State.teaDropped = false;
+      exp3State.microscope = false;
+      exp3State.hotParticles = [];
+      exp3State.coldParticles = [];
+      exp3State.animId = null;
+      document.getElementById('btnMicroscope').textContent = '🔬 Мікроскоп частинок';
+      document.getElementById('teaStatus').textContent = 'Опусти чайні пакетики, щоб побачити забарвлення води!';
+      drawExp3();
+    }
+
+    /* =========================================================================
+       EXPERIMENT 4: ПОСУДИНИ ТА ПЛОЩА ПОВЕРХНІ
+       ========================================================================= */
+    const canvas4 = document.getElementById('canvasExp4');
+    let exp4State = {
+      poured: false,
+      after15m: false,
+      tPetri: 20,
+      tBeaker: 20,
+      tFlask: 20
+    };
+
+    function drawExp4() {
+      const { ctx, w, h } = getContextScaled(canvas4, 240);
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, w, h);
+
+      const v1x = w * 0.2;
+      const v2x = w * 0.5;
+      const v3x = w * 0.8;
+      const baseY = 170;
+
+      // 1. Petri Dish (Wide)
+      ctx.fillStyle = '#e2e8f0';
+      ctx.beginPath();
+      ctx.ellipse(v1x, baseY, 52, 14, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // 2. Beaker
+      ctx.fillStyle = '#e2e8f0';
+      ctx.beginPath();
+      ctx.roundRect(v2x - 28, baseY - 55, 56, 55, [0, 0, 6, 6]);
+      ctx.fill();
+      ctx.stroke();
+
+      // 3. Flask (Erlenmeyer)
+      ctx.beginPath();
+      ctx.moveTo(v3x - 12, baseY - 70);
+      ctx.lineTo(v3x + 12, baseY - 70);
+      ctx.lineTo(v3x + 12, baseY - 48);
+      ctx.lineTo(v3x + 36, baseY);
+      ctx.lineTo(v3x - 36, baseY);
+      ctx.lineTo(v3x - 12, baseY - 48);
+      ctx.closePath();
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fill();
+      ctx.stroke();
+
+      // Water inside vessels
+      if (exp4State.poured) {
+        // Water in Petri
+        ctx.fillStyle = exp4State.after15m ? '#bae6fd' : '#f87171';
+        ctx.beginPath();
+        ctx.ellipse(v1x, baseY - 2, 48, 10, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Water in Beaker
+        ctx.fillStyle = exp4State.after15m ? '#fde68a' : '#f87171';
+        ctx.fillRect(v2x - 26, baseY - 38, 52, 36);
+
+        // Water in Flask
+        ctx.fillStyle = exp4State.after15m ? '#fca5a5' : '#f87171';
+        ctx.beginPath();
+        ctx.moveTo(v3x - 25, baseY - 32);
+        ctx.lineTo(v3x + 25, baseY - 32);
+        ctx.lineTo(v3x + 34, baseY - 2);
+        ctx.lineTo(v3x - 34, baseY - 2);
+        ctx.closePath();
+        ctx.fill();
+
+        // Steam plumes
+        if (!exp4State.after15m) {
+          drawSteamPlume(ctx, v1x, baseY - 20, 8); // huge steam from wide surface!
+          drawSteamPlume(ctx, v2x, baseY - 60, 4); // medium steam
+          drawSteamPlume(ctx, v3x, baseY - 75, 1); // tiny steam from narrow neck
+        }
+      }
+
+      // Titles & Temperatures
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 12px system-ui';
+
+      // 1. Petri
+      ctx.fillStyle = '#0f172a';
+      ctx.fillText('🥣 Чашка Петрі', v1x, 26);
+      ctx.font = '10px system-ui';
+      ctx.fillStyle = '#0369a1';
+      ctx.fillText('Широка (S = 78 см²)', v1x, 40);
+      drawTempBadge(ctx, v1x, baseY + 26, exp4State.tPetri, exp4State.poured);
+
+      // 2. Beaker
+      ctx.font = 'bold 12px system-ui';
+      ctx.fillStyle = '#0f172a';
+      ctx.fillText('🥛 Хім. склянка', v2x, 26);
+      ctx.font = '10px system-ui';
+      ctx.fillStyle = '#0369a1';
+      ctx.fillText('Середня (S = 20 см²)', v2x, 40);
+      drawTempBadge(ctx, v2x, baseY + 26, exp4State.tBeaker, exp4State.poured);
+
+      // 3. Flask
+      ctx.font = 'bold 12px system-ui';
+      ctx.fillStyle = '#0f172a';
+      ctx.fillText('🧪 Колба', v3x, 26);
+      ctx.font = '10px system-ui';
+      ctx.fillStyle = '#0369a1';
+      ctx.fillText('Вузьке горло (S = 3 см²)', v3x, 40);
+      drawTempBadge(ctx, v3x, baseY + 26, exp4State.tFlask, exp4State.poured);
+    }
+
+    function drawTempBadge(ctx, x, y, temp, poured) {
+      if (!poured) {
+        ctx.font = 'bold 13px system-ui';
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText('-- °C', x, y);
+        return;
+      }
+      ctx.save();
+      const col = temp > 50 ? '#dc2626' : (temp > 35 ? '#d97706' : '#0284c7');
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.roundRect(x - 30, y - 14, 60, 22, 6);
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 12px system-ui';
+      ctx.fillText(`${temp} °C`, x, y + 2);
+      ctx.restore();
+    }
+
+    function drawSteamPlume(ctx, x, y, density) {
+      ctx.fillStyle = 'rgba(203, 213, 225, 0.7)';
+      for (let i = 0; i < density; i++) {
+        const offX = (i - density/2) * 10;
+        ctx.beginPath();
+        ctx.arc(x + offX, y - 8 - Math.random() * 8, 8 + Math.random() * 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function pourHotWaterExp4() {
+      playSound('bubble');
+      exp4State.poured = true;
+      exp4State.after15m = false;
+      exp4State.tPetri = 80;
+      exp4State.tBeaker = 80;
+      exp4State.tFlask = 80;
+      document.getElementById('vesselStatus').innerHTML = '♨️ Гарячу воду 80°C налито. Спостерігай, як інтенсивно пара летить із широкої поверхні!';
+      drawExp4();
+    }
+
+    function wait15mExp4() {
+      if (!exp4State.poured) pourHotWaterExp4();
+      playSound('ding');
+      exp4State.after15m = true;
+      exp4State.tPetri = 28; // Cools rapidly!
+      exp4State.tBeaker = 44; // Moderate
+      exp4State.tFlask = 58; // Stays hot!
+      unlockStar(4);
+      document.getElementById('vesselStatus').innerHTML = '⏳ <strong>Минуло 15 хв:</strong> Чашка Петрі охолола до 28°C (найшвидше!), а колба зберегла 58°C.';
+      drawExp4();
+    }
+
+    function resetExp4() {
+      playSound('pop');
+      exp4State = { poured: false, after15m: false, tPetri: 20, tBeaker: 20, tFlask: 20 };
+      document.getElementById('vesselStatus').textContent = 'Натисни «Налити гарячу воду», щоб розпочати вимірювання!';
+      drawExp4();
+    }
+
+    /* =========================================================================
+       EXPERIMENT 5: ПЛАСТИЛІН (ДИФУЗІЯ У ТВЕРДИХ ТІЛАХ)
+       ========================================================================= */
+    const canvas5 = document.getElementById('canvasExp5');
+    let exp5State = {
+      joined: false,
+      separated: false,
+      kneaded: false
+    };
+
+    function drawExp5() {
+      const { ctx, w, h } = getContextScaled(canvas5, 240);
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, w, h);
+
+      const cx = w * 0.5;
+      const cy = h * 0.48;
+
+      ctx.textAlign = 'center';
+
+      if (exp5State.kneaded) {
+        // Blended green clay with playful marble swirls
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.12)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetY = 4;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 45, 0, Math.PI * 2);
+        ctx.fillStyle = '#16a34a';
+        ctx.fill();
+        ctx.restore();
+
+        // Swirl lines
+        ctx.strokeStyle = '#15803d';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 26, 0.2, Math.PI * 1.4);
+        ctx.stroke();
+
+        ctx.font = 'bold 13px system-ui';
+        ctx.fillStyle = '#15803d';
+        ctx.fillText('🟢 Розім\'ятий пластилін: кольори змішалися в ЗЕЛЕНИЙ!', cx, cy + 72);
+        ctx.font = '11px system-ui';
+        ctx.fillStyle = '#64748b';
+        ctx.fillText('Механічний рух і тепло долонь подолали опір кристалічної ґратки!', cx, cy + 90);
+      } else if (!exp5State.joined) {
+        // Two separate blocks: Blue and Yellow with 3D bevels
+        drawClayBlock(ctx, cx - 110, cy - 25, 65, 50, '#2563eb', '#1d4ed8');
+        drawClayBlock(ctx, cx + 45, cy - 25, 65, 50, '#eab308', '#ca8a04');
+
+        ctx.font = 'bold 12px system-ui';
+        ctx.fillStyle = '#1d4ed8';
+        ctx.fillText('🟦 Синій шматочок', cx - 78, cy + 48);
+        ctx.fillStyle = '#ca8a04';
+        ctx.fillText('🟨 Жовтий шматочок', cx + 78, cy + 48);
+      } else if (exp5State.joined && !exp5State.separated) {
+        // Stacked together
+        drawClayBlock(ctx, cx - 55, cy - 42, 110, 40, '#2563eb', '#1d4ed8');
+        drawClayBlock(ctx, cx - 55, cy - 2, 110, 40, '#eab308', '#ca8a04');
+
+        // Sharp boundary line
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx - 55, cy - 1);
+        ctx.lineTo(cx + 55, cy - 1);
+        ctx.stroke();
+
+        ctx.font = 'bold 12px system-ui';
+        ctx.fillStyle = '#0f172a';
+        ctx.fillText('⏳ З\'єднані разом (йде час 15 хв...)', cx, cy + 62);
+      } else if (exp5State.separated) {
+        // Separated: boundary clean!
+        drawClayBlock(ctx, cx - 100, cy - 25, 65, 50, '#2563eb', '#1d4ed8');
+        drawClayBlock(ctx, cx + 35, cy - 25, 65, 50, '#eab308', '#ca8a04');
+
+        ctx.font = 'bold 13px system-ui';
+        ctx.fillStyle = '#dc2626';
+        ctx.fillText('🚫 Кольори не змішалися!', cx, cy + 54);
+        ctx.font = '11px system-ui';
+        ctx.fillStyle = '#64748b';
+        ctx.fillText('У твердих тілах дифузія за кімнатної T° майже нульова.', cx, cy + 72);
+      }
+    }
+
+    function drawClayBlock(ctx, x, y, w, h, fillCol, strokeCol) {
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.08)';
+      ctx.shadowBlur = 8;
+      ctx.shadowOffsetY = 3;
+      ctx.fillStyle = fillCol;
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, 8);
+      ctx.fill();
+      ctx.restore();
+
+      ctx.strokeStyle = strokeCol;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function joinClay() {
+      playSound('pop');
+      exp5State.joined = true;
+      exp5State.separated = false;
+      exp5State.kneaded = false;
+      document.getElementById('clayStatus').innerHTML = '🤝 Шматочки пластиліну з\'єднано! Зачекайте 15 хвилин.';
+      drawExp5();
+    }
+
+    function separateClay() {
+      playSound('pop');
+      if (!exp5State.joined) joinClay();
+      exp5State.separated = true;
+      exp5State.kneaded = false;
+      unlockStar(5);
+      document.getElementById('clayStatus').innerHTML = '✂️ <strong>Роз\'єднано через 15 хв:</strong> Кольори не змішалися! Межа чітка.';
+      drawExp5();
+    }
+
+    function kneadClay() {
+      playSound('bubble');
+      exp5State.kneaded = true;
+      exp5State.joined = true;
+      exp5State.separated = false;
+      unlockStar(5);
+      document.getElementById('clayStatus').innerHTML = '🔥 <strong>Розім\'яли пальцями:</strong> Тепло рук і механічне змішування дали зелений колір!';
+      drawExp5();
+    }
+
+    // Window resize handler to maintain crisp visuals on orientation change or window resize
+    window.addEventListener('resize', () => {
+      drawExp1();
+      drawExp2();
+      drawExp3();
+      drawExp4();
+      drawExp5();
+    });
+
+    // Initialize all canvas views on load
+    window.addEventListener('load', () => {
+      drawExp1();
+      initExp2();
+      initExp3();
+      drawExp4();
+      drawExp5();
+    });
+  </script>
+</body>
+</html>
