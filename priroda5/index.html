@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Пізнаємо природу 5 клас — Практичні роботи</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-light: #e0f2fe;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --success: #10b981;
+      --success-light: #d1fae5;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow: 0 4px 16px rgba(0,0,0,0.05);
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding-bottom: 40px;
+    }
+
+    /* Top Sticky Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-icon {
+      font-size: 24px;
+      background: #e0f2fe;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .btn-qr {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      color: #0369a1;
+      padding: 6px 11px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .btn-qr:hover {
+      background: #e2e8f0;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 12px 14px;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: "🔬";
+      position: absolute;
+      right: 12px;
+      bottom: -10px;
+      font-size: 80px;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      opacity: 0.92;
+      line-height: 1.4;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #334155;
+      margin: 14px 2px 8px 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Cards Grid / List */
+    .works-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .work-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .work-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.12);
+    }
+
+    .work-card.featured {
+      border: 2px solid #0284c7;
+      background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+    }
+
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .work-num {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 8px;
+    }
+    .badge-open {
+      background: #dcfce7;
+      color: #15803d;
+    }
+    .badge-locked {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .work-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+
+    .work-desc {
+      font-size: 12.5px;
+      color: #475569;
+      line-height: 1.4;
+    }
+
+    .work-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 6px;
+      border-top: 1px dashed var(--border);
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .btn-launch {
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12.5px;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+    }
+
+    .work-card.disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      pointer-events: none;
+      background: #f8fafc;
+    }
+
+    /* Modal for QR Code */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .modal-content {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      padding: 18px;
+      text-align: center;
+      position: relative;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .qr-img {
+      width: 220px;
+      height: 220px;
+      margin: 12px auto;
+      display: block;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header>
+    <div class="header-left">
+      <div class="header-icon">🌿</div>
+      <div>
+        <h1 class="header-title">Пізнаємо природу</h1>
+        <div class="header-subtitle">5 клас • Інтерактивні досліди</div>
+      </div>
+    </div>
+    <button class="btn-qr" onclick="openQrModal()">📱 QR для класу</button>
+  </header>
+
+  <div class="container">
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <span class="hero-badge">Навчальний рік 2026/2027</span>
+      <h2 class="hero-title">Лабораторія практичних робіт</h2>
+      <p class="hero-desc">
+        Інтерактивні досліди, наочні анімації, спостереження та готові записи для зошита.
+      </p>
+    </div>
+
+    <!-- Section Title -->
+    <div class="section-title">🧪 Практичні роботи курсу</div>
+
+    <div class="works-list">
+
+      <!-- Work 2: FEATURED / TODAY -->
+      <a href="pr2.html" class="work-card featured">
+        <div class="work-header">
+          <span class="work-num badge-open">🟢 Робота № 2 • Актуальна</span>
+          <span style="font-size:11px; font-weight:700; color:#15803d;">ст. 17–18</span>
+        </div>
+        <div class="work-title">💧 Спостереження явищ дифузії та випаровування</div>
+        <div class="work-desc">
+          Порівняння води і спирту, поширення аромату мандарина у класі, заварювання чаю в гарячій воді, охолодження у різних посудинах та дифузія у пластиліні.
+        </div>
+        <div class="work-footer">
+          <span style="color:#0369a1;">5 інтерактивних дослідів</span>
+          <span class="btn-launch">Розпочати ➡️</span>
+        </div>
+      </a>
+
+      <!-- Work 1: Info placeholder -->
+      <div class="work-card disabled">
+        <div class="work-header">
+          <span class="work-num badge-locked">🔒 Робота № 1</span>
+          <span style="font-size:11px; color:#94a3b8;">ст. 8–9</span>
+        </div>
+        <div class="work-title">🧰 Правила безпеки та лабораторне обладнання</div>
+        <div class="work-desc">
+          Ознайомлення з лабораторним посудом, вимірювальними приладами та правилами безпеки в кабінеті природничих наук.
+        </div>
+        <div class="work-footer">
+          <span style="color:#94a3b8;">Пройдено</span>
+        </div>
+      </div>
+
+      <!-- Work 3: Upcoming -->
+      <div class="work-card disabled">
+        <div class="work-header">
+          <span class="work-num badge-locked">🔒 Робота № 3</span>
+          <span style="font-size:11px; color:#94a3b8;">ст. 24–25</span>
+        </div>
+        <div class="work-title">📏 Визначення розмірів малих тіл методом рядів</div>
+        <div class="work-desc">
+          Вимірювання діаметра горошин, насіння та товщини нитки за допомогою учнівської лінійки.
+        </div>
+        <div class="work-footer">
+          <span style="color:#94a3b8;">За розкладом</span>
+        </div>
+      </div>
+
+      <!-- Work 4: Upcoming -->
+      <div class="work-card disabled">
+        <div class="work-header">
+          <span class="work-num badge-locked">🔒 Робота № 4</span>
+          <span style="font-size:11px; color:#94a3b8;">ст. 32–33</span>
+        </div>
+        <div class="work-title">🧪 Розділення сумішей (фільтрування, відстоювання)</div>
+        <div class="work-desc">
+          Очищення води від піску та тирси, робота з лійкою, фільтрувальним папером та хімічною склянкою.
+        </div>
+        <div class="work-footer">
+          <span style="color:#94a3b8;">За розкладом</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- QR Code Modal for Classroom Projection -->
+  <div class="modal-backdrop" id="qrModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeQrModal()">✕</button>
+      <h3 style="font-size:16px; font-weight:800; margin-bottom:4px;">📱 QR-код для учнів</h3>
+      <p style="font-size:12px; color:#64748b;">Наведіть камеру смартфона, щоб відкрити роботу на уроці:</p>
+      
+      <img id="qrImage" class="qr-img" alt="QR-код для переходу" src="">
+      
+      <div style="font-size:12px; font-weight:700; color:#0369a1; word-break:break-all;" id="currentUrlText">
+        Завантаження посилання...
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openQrModal() {
+      const modal = document.getElementById('qrModal');
+      const qrImg = document.getElementById('qrImage');
+      const urlText = document.getElementById('currentUrlText');
+
+      // Use target pr2 URL if on root or current page
+      let targetUrl = window.location.href;
+      if (!targetUrl.includes('pr2.html')) {
+        targetUrl = targetUrl.replace(/index\.html$/, '') + 'pr2.html';
+      }
+
+      urlText.textContent = targetUrl;
+      // Generate clean QR code via fast dynamic API
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(targetUrl)}`;
+      modal.classList.add('open');
+    }
+
+    function closeQrModal() {
+      document.getElementById('qrModal').classList.remove('open');
+    }
+
+    // Close modal on click outside
+    document.getElementById('qrModal').addEventListener('click', (e) => {
+      if (e.target.id === 'qrModal') closeQrModal();
+    });
+  </script>
+</body>
+</html>
