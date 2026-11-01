@@ -102,66 +102,11 @@
       border-color: var(--accent);
     }
 
-    /* Progress Tracker Bar */
-    .progress-bar-container {
-      background: #e2e8f0;
-      height: 4px;
-      width: 100%;
-      position: sticky;
-      top: 45px;
-      z-index: 49;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #0284c7, #10b981, #f59e0b);
-      width: 14%;
-      transition: width 0.35s ease;
-    }
-
     /* Container for content */
     .container {
       max-width: 680px;
       margin: 0 auto;
-      padding: 6px 10px;
-    }
-
-    /* Stepper / Tab Navigator */
-    .step-pills {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding: 2px 1px 8px 1px;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-    }
-    .step-pills::-webkit-scrollbar {
-      display: none;
-    }
-
-    .step-pill {
-      flex: 0 0 auto;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 6px 11px;
-      border-radius: 18px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: all 0.2s ease;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-    }
-
-    .step-pill.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
-      transform: translateY(-1px);
+      padding: 8px 10px;
     }
 
     /* Cards */
@@ -714,7 +659,7 @@
         padding-bottom: 0;
         background: #fff;
       }
-      header, .bottom-bar, .sim-box, .btn, .step-pills, .progress-bar-container, .mini-quiz {
+      header, .bottom-bar, .sim-box, .btn, .mini-quiz {
         display: none !important;
       }
       .tab-content {
@@ -741,23 +686,7 @@
     </div>
   </header>
 
-  <!-- Progress Bar -->
-  <div class="progress-bar-container">
-    <div class="progress-bar-fill" id="progressBarFill"></div>
-  </div>
-
   <div class="container">
-
-    <!-- Stepper Navigation Pills -->
-    <div class="step-pills" id="stepPills">
-      <button class="step-pill active" data-tab="tab-intro">📋 Вступ</button>
-      <button class="step-pill" data-tab="tab-exp1">💧 1. Спирт / Вода</button>
-      <button class="step-pill" data-tab="tab-exp2">🍊 2. Мандарин</button>
-      <button class="step-pill" data-tab="tab-exp3">🍵 3. Чай (T°)</button>
-      <button class="step-pill" data-tab="tab-exp4">🌡️ 4. Посудини</button>
-      <button class="step-pill" data-tab="tab-exp5">🧱 5. Пластилін</button>
-      <button class="step-pill" data-tab="tab-summary">🏆 Висновок</button>
-    </div>
 
     <!-- TAB 0: ВСТУП ТА ОБЛАДНАННЯ -->
     <div class="tab-content active" id="tab-intro">
@@ -1358,14 +1287,35 @@
 
     // Mini-quiz validation
     function checkQuiz(btn, isCorrect, expNum) {
+      const container = btn.closest('.quiz-options');
+      // If this button was already clicked, do nothing
+      if (btn.classList.contains('correct') || btn.classList.contains('wrong')) return;
+      // If another button in this quiz is already correct, ignore
+      if (container && container.querySelector('.quiz-btn.correct')) return;
+
+      if (!btn.dataset.original) {
+        btn.dataset.original = btn.innerHTML.trim();
+      }
+
       if (isCorrect) {
         playSound('ding');
+        btn.classList.remove('wrong');
         btn.classList.add('correct');
-        btn.innerHTML += ' ✅ Правильно!';
+        btn.innerHTML = btn.dataset.original + ' ✅';
+        if (container) {
+          container.querySelectorAll('.quiz-btn').forEach(b => {
+            if (b !== btn) {
+              b.style.pointerEvents = 'none';
+              b.style.opacity = '0.45';
+            }
+          });
+        }
         unlockStar(expNum);
       } else {
         playSound('pop');
         btn.classList.add('wrong');
+        btn.innerHTML = btn.dataset.original + ' ❌';
+        btn.style.pointerEvents = 'none';
       }
     }
 
@@ -1378,25 +1328,18 @@
       const idx = tabs.indexOf(tabId);
       if (idx !== -1) currentTabIndex = idx;
 
-      // Update pills
-      document.querySelectorAll('.step-pill').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
-        if (btn.getAttribute('data-tab') === tabId) {
-          btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-      });
-
       // Update contents
       document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.toggle('active', content.id === tabId);
       });
 
-      // Update bottom progress & indicator
-      const progressPercent = Math.round(((currentTabIndex + 1) / tabs.length) * 100);
-      document.getElementById('progressBarFill').style.width = `${progressPercent}%`;
+      // Update bottom indicator
       document.getElementById('currentStepIndicator').textContent = `Крок ${currentTabIndex + 1} з ${tabs.length}`;
       document.getElementById('btnPrevTab').style.visibility = currentTabIndex === 0 ? 'hidden' : 'visible';
       document.getElementById('btnNextTab').textContent = currentTabIndex === tabs.length - 1 ? 'Завершити 🎉' : 'Наступна ➡️';
+
+      // Scroll to top smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Redraw canvases with proper sizes
       requestAnimationFrame(() => {
@@ -1414,12 +1357,6 @@
         goToTab(tabs[nextIndex]);
       }
     }
-
-    document.querySelectorAll('.step-pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        goToTab(pill.getAttribute('data-tab'));
-      });
-    });
 
     // Equipment checklist
     function toggleEquip(item) {
