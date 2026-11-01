@@ -1,0 +1,138 @@
+/* Workbook fields, Answer Boxes, Tables and Equipment for Practical Work #3 */
+
+.notebook-section {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 8px;
+}
+
+.notebook-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border);
+}
+
+.q-block {
+  margin-bottom: 8px;
+}
+
+.q-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 2px;
+  display: block;
+}
+
+/* Notebook Answer Box */
+.answer-box {
+  background: #f0fdf4;
+  border: none;
+  border-left: 3px solid #10b981;
+  border-radius: 4px;
+  padding: 6px 9px;
+  margin-top: 2px;
+  font-size: 13px;
+  color: #065f46;
+  line-height: 1.45;
+  display: block;
+}
+
+.answer-box strong {
+  color: #047857;
+}
+
+/* Table styles matching the notebook */
+.table-container {
+  overflow-x: auto;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.nb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  background: #ffffff;
+}
+
+.nb-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+  padding: 6px 8px;
+  border-bottom: 2px solid var(--border);
+  border-right: 1px solid var(--border);
+  text-align: left;
+}
+
+.nb-table th:last-child {
+  border-right: none;
+}
+
+.nb-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.nb-table td:last-child {
+  border-right: none;
+}
+
+.nb-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Equipment Checklist Grid */
+.equip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 4px;
+  margin: 6px 0 12px 0;
+}
+
+.equip-item {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+}
+
+.equip-item:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.equip-item.checked {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.equip-item.checked::after {
+  content: "✓";
+  margin-left: auto;
+  font-weight: 800;
+  color: #16a34a;
+}

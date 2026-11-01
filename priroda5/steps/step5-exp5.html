@@ -1,0 +1,52 @@
+<div class="card-header">
+          <div>
+            <h2 class="card-title">🧱 Завдання № 5</h2>
+            <div class="card-subtitle">Дифузія у твердих тілах (пластилін)</div>
+          </div>
+          <span class="action-badge" style="background:#e0e7ff; color:#3730a3;">Дослід 5</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Поклади два шматочки пластиліну різного кольору один на одний. Через 15 хв роз'єднай їх. Опиши свої спостереження.
+        </div>
+
+        <!-- Simulation Box -->
+        <div class="sim-box">
+          <canvas id="canvasExp5" class="sim-canvas" width="600" height="240"></canvas>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-secondary" id="btnJoinClay" onclick="joinClay()">🤝 З'єднати шматочки</button>
+            <button class="btn btn-sm btn-accent" id="btnSeparateClay" onclick="separateClay()">✂️ Роз'єднати через 15 хв</button>
+            <button class="btn btn-sm btn-success" id="btnKneadClay" onclick="kneadClay()">🔥 Нагріти й розім'яти!</button>
+          </div>
+          <div id="clayStatus" class="sim-status" style="color:#4338ca;">
+            Натисни «З'єднати шматочки», щоб перевірити дифузію у твердих тілах!
+          </div>
+        </div>
+
+        <!-- Mini Quiz -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: Чи відбулася помітна дифузія у твердому пластиліні за 15 хв без нагрівання?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 5)">🚫 Ні, межа чітка</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 5)">✅ Так, кольори злилися</button>
+          </div>
+        </div>
+
+        <!-- Notebook questions -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Записи у зошит (ст. 18)</div>
+
+          <div class="q-block">
+            <label class="q-label">Спостереження (після роз'єднання шматочків):</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Шматочки пластиліну легко роз'єдналися. На межі дотику кольори залишилися чіткими і не проникли один в один. Дифузії за 15 хвилин при кімнатній температурі не помітно.
+            </div>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">Яким чином можна пришвидшити процес дифузії?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Дифузію у твердих тілах можна пришвидшити <strong>нагріванням</strong> (тепло пальців), <strong>сильним тиском</strong> або <strong>механічним перемішуванням</strong> (розім'яти пластилін руками).
+            </div>
+          </div>
+        </div>

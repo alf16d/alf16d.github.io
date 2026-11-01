@@ -1,0 +1,59 @@
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🧴 Завдання № 4</h2>
+    <div class="card-subtitle">Чому для виведення застарілих жирних плям використовують ацетон?</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Запитання із зошита (ст. 22):</strong> Дай відповідь на запитання: <em>Чому для виведення застарілої жирної плями на одязі використовують ацетон?</em>
+</div>
+
+<!-- Simulation Container -->
+<div class="sim-box">
+  <canvas id="canvasExp4" class="sim-canvas" width="600" height="230"></canvas>
+
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-secondary" onclick="testWaterStain()">💧 Спробувати водою (пляма 1)</button>
+    <button class="btn btn-sm btn-purple" onclick="testAcetoneStain()">🧴 Нанести ацетон (пляма 2)</button>
+    <button class="btn btn-sm btn-success" onclick="blotStain()">🧻 Промокнути серветкою</button>
+    <button class="btn btn-sm btn-secondary" onclick="resetExp4()">🔄 Скинути</button>
+  </div>
+
+  <div id="exp4Status" class="sim-status" style="color:#0369a1;">
+    Порівняйте дію води та ацетону на жирну пляму за допомогою кнопок вище!
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Яке головне правило хімії пояснює дію розчинників на плями?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 4, 'Абсолютно вірно! Полярні речовини розчиняються у полярних розчинниках (як цукор чи сіль у воді), а неполярні (жири, олії) — у неполярних органічних розчинниках (ацетоні, бензині, спирті).')">
+      ✨ «Подібне розчиняється в подібному»
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 4)">
+      🧊 «Усе розчиняється лише при охолодженні»
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 4)">
+      💨 «Вода розчиняє абсолютно будь-які речовини у світі»
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Короткий запис у зошит (ст. 22)</div>
+
+  <div class="q-block">
+    <label class="q-label">Чому для виведення плями використовують ацетон?</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Жир не розчиняється у воді, але легко розчиняється в органічному розчиннику — ацетоні.
+    </div>
+  </div>
+
+  <div style="background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0; padding:8px 10px; margin-top:8px; font-size:12px; line-height:1.45; color:#475569;">
+    ⚠️ <strong>Правило безпеки:</strong> Ацетон легкозаймистий та має різкий запах. Роботу з органічними розчинниками слід проводити лише в добре провітрюваному приміщенні подалі від джерел вогню!
+  </div>
+</div>

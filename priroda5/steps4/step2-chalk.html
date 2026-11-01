@@ -1,0 +1,77 @@
+<div class="card-header">
+  <div>
+    <h2 class="card-title">⚪ Зразок № 2 — Крейда</h2>
+    <div class="card-subtitle">Осадова гірська порода органічного походження</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Інструкція:</strong> Розглянь шматочок крейди. Спробуй провести лінію по дошці чи паперу. Відчуй пальцями її структуру — вона м'яка і залишає білий слід.
+</div>
+
+<div class="sim-box">
+  <canvas id="canvasRock_chalk" class="sim-canvas" width="600" height="230"></canvas>
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary" id="btnLoupe_chalk" onclick="toggleMagnifier('chalk')">🔍 Дослідити під лупою</button>
+  </div>
+  <div class="sim-status" style="color:#0369a1;">
+    Під лупою видно, що крейда складається з найдрібніших частинок давніх черепашок і водоростей.
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Яку щільність має крейда порівняно з гранітом?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 2, 'Правильно! Крейда є м\'якою, крихкою і легко розсипається на порошок.')">
+      ⚪ М'яка, крихка, легко кришиться
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 2)">
+      ⚪ Така ж тверда, як граніт
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 2)">
+      ⚪ Рідка при кімнатній температурі
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Характеристики для таблиці (ст. 29)</div>
+
+  <div class="q-block">
+    <label class="q-label">1. Колір:</label>
+    <div class="answer-box">
+      ✏️ Білий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">2. Блиск:</label>
+    <div class="answer-box">
+      ✏️ Матовий (без блиску).
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">3. Прозорість:</label>
+    <div class="answer-box">
+      ✏️ Непрозорий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">4. Пухка / щільна:</label>
+    <div class="answer-box">
+      ✏️ Пухка, м'яка, крихка.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">5. Використання людиною:</label>
+    <div class="answer-box">
+      ✏️ Письмо на дошці, виробництво фарби, вапна, побілка, будівництво.
+    </div>
+  </div>
+</div>

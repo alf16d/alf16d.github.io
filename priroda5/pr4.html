@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Практична робота №4 — Ознайомлення зі зразками гірських порід і мінералів | 5 клас</title>
+  <!-- Modular CSS styles for PR4 -->
+  <link rel="stylesheet" href="css/pr4-base.css">
+  <link rel="stylesheet" href="css/pr4-sim.css">
+  <link rel="stylesheet" href="css/pr4-workbook.css">
+  <link rel="stylesheet" href="css/pr4-modals.css">
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header>
+    <div class="header-info" style="display:flex; flex-direction:row; align-items:center; gap:8px;">
+      <a href="index.html" class="icon-btn" style="text-decoration:none; padding:4px 8px; font-size:12px;" title="До списку робіт">🏠 Меню</a>
+      <h1 class="header-title">Практична робота № 4</h1>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- TAB 0: ВСТУП ТА ОБЛАДНАННЯ (ЕКО-РОЗМИНКА) -->
+    <div class="tab-content active" id="tab-intro">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🔬 Тема та Мета роботи</h2>
+    <div class="card-subtitle">Сторінка 29 друкованого зошита</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  <strong>Тема:</strong> Ознайомлення зі зразками гірських порід і мінералів.<br>
+  <strong>Мета:</strong> дослідити властивості гірських порід і мінералів (колір, блиск, прозорість, щільність) та з'ясувати їх використання людиною.
+</div>
+
+<p style="font-size:14px; font-weight:800; margin-bottom:8px; color:#334155;">
+  🧰 Обладнання та матеріали (натискай для перевірки):
+</p>
+<div class="equip-grid" id="equipGrid">
+  <div class="equip-item" onclick="toggleEquip(this)">🔍 Лупа збільшувальна</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🪨 Зразок: Граніт</div>
+  <div class="equip-item" onclick="toggleEquip(this)">⚪ Зразок: Крейда</div>
+  <div class="equip-item" onclick="toggleEquip(this)">⬛ Зразок: Вугілля</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🧪 Порцелянова пластинка</div>
+  <div class="equip-item" onclick="toggleEquip(this)">📖 Таблиця властивостей</div>
+</div>
+
+<div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 12px; margin-top:8px;">
+  <h3 style="font-size:13.5px; font-weight:800; color:#1e40af; margin-bottom:4px;">
+    💎 Що ми досліджуємо в цій роботі?
+  </h3>
+  <p style="font-size:12.5px; line-height:1.45; color:#1e3a8a;">
+    <strong>Гірські породи</strong> — це природні тіла, які складають земну кору і здебільшого утворені з кількох <strong>мінералів</strong>. У цій практичній роботі ми дослідимо три зразки порід за їхніми головними властивостями: кольором, блиском, прозорістю, структурою та з'ясуємо, як людина використовує їх у повсякденному житті.
+  </p>
+</div>
+    </div>
+
+    <!-- TAB 1: ЗРАЗОК №1 (ГРАНІТ) -->
+    <div class="tab-content" id="tab-granite">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🪨 Зразок № 1 — Граніт</h2>
+    <div class="card-subtitle">Магматична гірська порода</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Інструкція:</strong> Розглянь зразок граніту за допомогою лупи. Зверни увагу на неоднорідне забарвлення: рожеві та червоні зерна польового шпату, прозорі зерна кварцу та чорні блискучі лусочки слюди.
+</div>
+
+<div class="sim-box">
+  <canvas id="canvasRock_granite" class="sim-canvas" width="600" height="230"></canvas>
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary" id="btnLoupe_granite" onclick="toggleMagnifier('granite')">🔍 Дослідити під лупою</button>
+  </div>
+  <div class="sim-status" style="color:#0369a1;">
+    Під лупою чітко видно окремі зерна трьох мінералів: польового шпату, кварцу та слюди.
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Зі скількох головних мінералів складається граніт?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 1, 'Вірно! Граніт складається з трьох мінералів: кварцу, польового шпату та слюди.')">
+      🔹 З 3 мінералів (шпат, кварц, слюда)
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">
+      🔹 З одного чистого металу
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">
+      🔹 З морського піску
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Характеристики для таблиці (ст. 29)</div>
+
+  <div class="q-block">
+    <label class="q-label">1. Колір:</label>
+    <div class="answer-box">
+      ✏️ Сірий або рожевий із темними цятками.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">2. Блиск:</label>
+    <div class="answer-box">
+      ✏️ Скляний (у зерен слюди та кварцу) і матовий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">3. Прозорість:</label>
+    <div class="answer-box">
+      ✏️ Непрозорий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">4. Пухка / щільна:</label>
+    <div class="answer-box">
+      ✏️ Дуже щільна, тверда, міцна.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">5. Використання людиною:</label>
+    <div class="answer-box">
+      ✏️ Будівництво, облицювання споруд, пам'ятники, бруківка, щебінь.
+    </div>
+  </div>
+</div>
+    </div>
+
+    <!-- TAB 2: ЗРАЗОК №2 (КРЕЙДА) -->
+    <div class="tab-content" id="tab-chalk">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">⚪ Зразок № 2 — Крейда</h2>
+    <div class="card-subtitle">Осадова гірська порода органічного походження</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Інструкція:</strong> Розглянь шматочок крейди. Спробуй провести лінію по дошці чи паперу. Відчуй пальцями її структуру — вона м'яка і залишає білий слід.
+</div>
+
+<div class="sim-box">
+  <canvas id="canvasRock_chalk" class="sim-canvas" width="600" height="230"></canvas>
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary" id="btnLoupe_chalk" onclick="toggleMagnifier('chalk')">🔍 Дослідити під лупою</button>
+  </div>
+  <div class="sim-status" style="color:#0369a1;">
+    Під лупою видно, що крейда складається з найдрібніших частинок давніх черепашок і водоростей.
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Яку щільність має крейда порівняно з гранітом?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 2, 'Правильно! Крейда є м\'якою, крихкою і легко розсипається на порошок.')">
+      ⚪ М'яка, крихка, легко кришиться
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 2)">
+      ⚪ Така ж тверда, як граніт
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 2)">
+      ⚪ Рідка при кімнатній температурі
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Характеристики для таблиці (ст. 29)</div>
+
+  <div class="q-block">
+    <label class="q-label">1. Колір:</label>
+    <div class="answer-box">
+      ✏️ Білий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">2. Блиск:</label>
+    <div class="answer-box">
+      ✏️ Матовий (без блиску).
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">3. Прозорість:</label>
+    <div class="answer-box">
+      ✏️ Непрозорий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">4. Пухка / щільна:</label>
+    <div class="answer-box">
+      ✏️ Пухка, м'яка, крихка.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">5. Використання людиною:</label>
+    <div class="answer-box">
+      ✏️ Письмо на дошці, виробництво фарби, вапна, побілка, будівництво.
+    </div>
+  </div>
+</div>
+    </div>
+
+    <!-- TAB 3: ЗРАЗОК №3 (КАМ'ЯНЕ ВУГІЛЛЯ) -->
+    <div class="tab-content" id="tab-coal">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">⬛ Зразок № 3 — Кам'яне вугілля</h2>
+    <div class="card-subtitle">Осадова горюча корисна копалина</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Інструкція:</strong> Досліди зразок кам'яного вугілля. Зверни увагу на чорний насичений колір і блискучі грані. Воно легко горить і виділяє велику кількість тепла.
+</div>
+
+<div class="sim-box">
+  <canvas id="canvasRock_coal" class="sim-canvas" width="600" height="230"></canvas>
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary" id="btnLoupe_coal" onclick="toggleMagnifier('coal')">🔍 Дослідити під лупою</button>
+  </div>
+  <div class="sim-status" style="color:#0369a1;">
+    Під лупою помітні блискучі смолисті грані та шарувата структура скам'янілої деревини.
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: З чого утворилося кам'яне вугілля мільйони років тому?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 3, 'Точно! Кам\'яне вугілля утворилося з прадавніх велетенських деревоподібних папоротей і хвощів.')">
+      🌿 З відмерлих решток давніх рослин і дерев
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">
+      🌋 Із застиглої вулканічної лави
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">
+      🐚 З мушель молюсків
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Характеристики для таблиці (ст. 29)</div>
+
+  <div class="q-block">
+    <label class="q-label">1. Колір:</label>
+    <div class="answer-box">
+      ✏️ Чорний.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">2. Блиск:</label>
+    <div class="answer-box">
+      ✏️ Смолистий, скляний (напівметалічний).
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">3. Прозорість:</label>
+    <div class="answer-box">
+      ✏️ Непрозорий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">4. Пухка / щільна:</label>
+    <div class="answer-box">
+      ✏️ Щільна, але крихка (легко розколюється).
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">5. Використання людиною:</label>
+    <div class="answer-box">
+      ✏️ Паливо для опалення і ТЕС, виплавка металів, сировина для хімії.
+    </div>
+  </div>
+</div>
+    </div>
+
+    <!-- TAB 4: ПІДСУМКОВА ТАБЛИЦЯ ХАРАКТЕРИСТИК -->
+    <div class="tab-content" id="tab-table">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">📊 Підсумкова таблиця практичної роботи</h2>
+    <div class="card-subtitle">Сторінка 29 друкованого зошита</div>
+  </div>
+</div>
+
+<div class="tip-box success">
+  ✅ <strong>Готова таблиця для зошита:</strong> Усі 3 зразки досліджено. Нижче наведено зведену таблицю з короткими даними для швидкого та охайного запису.
+</div>
+
+<div class="table-container">
+  <table class="nb-table">
+    <thead>
+      <tr>
+        <th style="width:25%;">Характеристики</th>
+        <th style="width:25%; background:#f1f5f9; color:#0f172a;">Граніт</th>
+        <th style="width:25%; background:#f8fafc; color:#0f172a;">Крейда</th>
+        <th style="width:25%; background:#e2e8f0; color:#0f172a;">Кам'яне вугілля</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Колір</strong></td>
+        <td>Сірий, рожевий з чорними цятками</td>
+        <td>Білий</td>
+        <td>Чорний</td>
+      </tr>
+      <tr>
+        <td><strong>2. Блиск</strong></td>
+        <td>Скляний і матовий</td>
+        <td>Матовий (без блиску)</td>
+        <td>Смолистий, скляний</td>
+      </tr>
+      <tr>
+        <td><strong>3. Прозорість</strong></td>
+        <td>Непрозорий</td>
+        <td>Непрозорий</td>
+        <td>Непрозорий</td>
+      </tr>
+      <tr>
+        <td><strong>4. Пухка / щільна</strong></td>
+        <td>Дуже щільна, тверда</td>
+        <td>Пухка, м'яка, крихка</td>
+        <td>Щільна, але крихка</td>
+      </tr>
+      <tr>
+        <td><strong>5. Використання людиною</strong></td>
+        <td>Будівництво, облицювання, пам'ятники</td>
+        <td>Письмо на дошці, фарби, побілка</td>
+        <td>Паливо для опалення, ТЕС, металургія</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="tip-box" style="margin-top:10px;">
+  💡 <strong>Висновок до таблиці:</strong> Гірські породи бувають різного походження (магматичні, осадові), мають різні фізичні властивості й знаходять широке застосування в житті людини.
+</div>
+    </div>
+
+    <!-- TAB 5: ЗАГАЛЬНИЙ ВИСНОВОК ТА САМООЦІНКА -->
+    <div class="tab-content" id="tab-summary">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🏆 Загальний висновок роботи</h2>
+    <div class="card-subtitle">Підсумок практичної роботи для запису в зошит</div>
+  </div>
+</div>
+
+<div class="tip-box success">
+  🎉 <strong>Чудова робота!</strong> Усі зразки гірських порід і мінералів успішно досліджені!
+</div>
+
+<!-- Key Rules -->
+<div style="margin-bottom:12px;">
+  <h3 style="font-size:14px; font-weight:800; color:#1e293b; margin-bottom:8px;">💡 Що ми дізналися про гірські породи та мінерали:</h3>
+
+  <div style="font-size:13px; line-height:1.5; color:#334155; display:flex; flex-direction:column; gap:6px;">
+    <div style="background:#f0fdf4; border-left:3px solid #10b981; border-radius:4px; padding:6px 8px;">
+      <strong style="color:#15803d;">🔹 1. Різноманітність властивостей:</strong><br>
+      Гірські породи відрізняються кольором, блиском, прозорістю та щільністю (твердий граніт, пухка крейда, шарувате вугілля).
+    </div>
+
+    <div style="background:#eff6ff; border-left:3px solid #3b82f6; border-radius:4px; padding:6px 8px;">
+      <strong style="color:#1d4ed8;">🔹 2. Склад порід:</strong><br>
+      Більшість гірських порід складаються з кількох мінералів (наприклад, граніт — із польового шпату, кварцу та слюди).
+    </div>
+
+    <div style="background:#fffbeb; border-left:3px solid #f59e0b; border-radius:4px; padding:6px 8px;">
+      <strong style="color:#b45309;">🔹 3. Значення для людини:</strong><br>
+      Людина використовує їх у будівництві, як джерело енергії (паливо) та в промисловості.
+    </div>
+  </div>
+</div>
+
+<!-- Notebook Short Conclusion Text -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Короткий висновок для запису в зошит</div>
+  <div class="answer-box" style="font-size:13px; line-height:1.5; padding:8px 10px;">
+    ✏️ <strong>Запис у зошит:</strong><br>
+    1. Гірські породи відрізняються за кольором, блиском і щільністю (бувають тверді, як граніт, або пухкі, як крейда).<br>
+    2. Вони складаються з мінералів і широко використовуються людиною у будівництві, побуті та як паливо.
+  </div>
+</div>
+
+<div style="margin-top:12px; display:flex; justify-content:center; gap:8px;">
+  <button class="btn btn-secondary" onclick="goToTab('tab-intro')">🔄 Почати спочатку</button>
+  <a href="index.html" class="btn btn-accent">🏠 До переліку робіт</a>
+</div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation Bar for Mobile -->
+  <nav class="bottom-bar">
+    <button class="btn btn-sm btn-secondary" id="btnPrevTab" onclick="navStep(-1)">⬅️ Попередня</button>
+    <div style="font-size:13px; font-weight:800; color:var(--text-muted);" id="currentStepIndicator">Крок 1 з 6</div>
+    <button class="btn btn-sm btn-accent" id="btnNextTab" onclick="navStep(1)">Наступна ➡️</button>
+  </nav>
+
+  <!-- Modals -->
+<!-- Modals for PR4 -->
+
+  <!-- Modular Scripts for PR4 -->
+  <script src="js/pr4-core.js"></script>
+  <script src="js/pr4-rock.js"></script>
+</body>
+</html>

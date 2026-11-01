@@ -1,0 +1,241 @@
+/* Interactive Simulation Styles for Rocks and Minerals (PR4) */
+
+.sim-box {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 8px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: none;
+}
+
+canvas.sim-canvas {
+  width: 100%;
+  height: 220px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  display: block;
+}
+
+.sim-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 6px;
+  width: 100%;
+}
+
+.sim-status {
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 700;
+  text-align: center;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+/* Rock Specimen Cards */
+.specimen-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 500px) {
+  .specimen-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.specimen-card {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.specimen-card:hover {
+  border-color: var(--primary);
+  background: #f0f9ff;
+}
+
+.specimen-card.active {
+  border-color: var(--primary);
+  background: #e0f2fe;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
+}
+
+.specimen-thumb {
+  font-size: 28px;
+  margin-bottom: 2px;
+}
+
+.specimen-name {
+  font-size: 12px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.specimen-origin {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Interactive Fun Quiz Widget */
+.mini-quiz {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.mini-quiz-title {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #92400e;
+  margin-bottom: 6px;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.quiz-btn {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quiz-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.quiz-btn.correct {
+  background: #dcfce7 !important;
+  border-color: #86efac !important;
+  color: #15803d !important;
+  font-weight: 700;
+}
+
+.quiz-btn.wrong {
+  background: #fee2e2 !important;
+  border-color: #fca5a5 !important;
+  color: #b91c1c !important;
+}
+
+.quiz-feedback {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px dashed #f59e0b;
+  color: #78350f;
+  display: none;
+}
+
+/* Self-assessment scale from workbook */
+.self-assess-box {
+  background: #ffffff;
+  border: 2px solid #38bdf8;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 10px 0;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.1);
+}
+
+.self-assess-header {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0284c7;
+  text-align: center;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.self-assess-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+@media (max-width: 580px) {
+  .self-assess-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+.self-assess-item {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.self-assess-item:hover {
+  background: #e0f2fe;
+  border-color: #38bdf8;
+}
+
+.self-assess-item.selected {
+  background: #dbeafe;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.self-assess-icon {
+  font-size: 18px;
+}
+
+.self-assess-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.25;
+}

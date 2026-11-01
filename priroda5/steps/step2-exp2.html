@@ -1,0 +1,64 @@
+<div class="card-header">
+          <div>
+            <h2 class="card-title">🍊 Завдання № 2</h2>
+            <div class="card-subtitle">Поширення запаху в повітрі (дифузія в газах)</div>
+          </div>
+          <span class="action-badge" style="background:#ffedd5; color:#c2410c;">Дослід 2</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Зніми у приміщенні шкірочку з мандарина. Чи відразу відчувається запах? Як швидко поширюється цей запах по кімнаті?
+        </div>
+
+        <!-- Simulation Box -->
+        <div class="sim-box">
+          <canvas id="canvasExp2" class="sim-canvas" width="600" height="240"></canvas>
+          <div class="slider-row">
+            <span class="slider-label">🌡️ T° повітря в класі:</span>
+            <input type="range" min="10" max="38" value="22" class="slider-input" id="roomTempSlider" oninput="updateRoomTemp(this.value)">
+            <span class="slider-val" id="roomTempVal">22°C</span>
+          </div>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-accent" id="btnPeelMandarin" onclick="peelMandarin()">🍊 Очистити мандарин</button>
+            <button class="btn btn-sm btn-secondary" onclick="resetExp2()">💨 Провітрити клас</button>
+          </div>
+          <div id="mandarinStatus" class="sim-status" style="color:#c2410c;">
+            Натисни «Очистити мандарин» і спостерігай, як аромат долає відстань до парт!
+          </div>
+        </div>
+
+        <!-- Mini Quiz -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: Як називається явище взаємного проникнення речовин?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 2)">✨ Дифузія</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 2)">🧊 Замерзання</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 2)">🧲 Магнетизм</button>
+          </div>
+        </div>
+
+        <!-- Table from Notebook -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Таблиця для запису в зошит (ст. 17)</div>
+
+          <div class="table-container">
+            <table class="nb-table">
+              <thead>
+                <tr>
+                  <th style="width:50%;">Спостереження</th>
+                  <th style="width:50%;">Висновки</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color:#0f172a; line-height:1.45; background:#f0fdf4;">
+                    ✏️ Запах відчувається не миттєво. Спочатку аромат мандарина відчули учні на 1-й парті біля стола вчителя, а за деякий час запах поширився по всьому класу аж до останніх парт.
+                  </td>
+                  <td style="color:#0f172a; line-height:1.45; background:#f0fdf4;">
+                    ✏️ Поширення запаху відбувається внаслідок явища <strong>дифузії</strong> — безперервного хаотичного руху молекул пахучих ефірних олій мандарина між молекулами повітря. У газах дифузія відбувається дуже швидко.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>

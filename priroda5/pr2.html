@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Практична робота №2 — Спостереження явищ дифузії та випаровування | 5 клас</title>
-  <link rel="stylesheet" href="css/pr2.css">
+  <!-- Modular CSS styles -->
+  <link rel="stylesheet" href="css/pr2-base.css">
+  <link rel="stylesheet" href="css/pr2-sim.css">
+  <link rel="stylesheet" href="css/pr2-workbook.css">
+  <link rel="stylesheet" href="css/pr2-modals.css">
 </head>
 <body>
 
@@ -14,17 +18,13 @@
       <a href="index.html" class="icon-btn" style="text-decoration:none; padding:4px 8px; font-size:12px;" title="До списку робіт">🏠 Меню</a>
       <h1 class="header-title">Практична робота № 2</h1>
     </div>
-    <div class="header-actions">
-      <button class="icon-btn" id="btnSoundToggle" title="Звук">🔊</button>
-    </div>
   </header>
 
   <div class="container">
 
     <!-- TAB 0: ВСТУП ТА ОБЛАДНАННЯ -->
     <div class="tab-content active" id="tab-intro">
-      <div class="card">
-        <div class="card-header">
+<div class="card-header">
           <div>
             <h2 class="card-title">🔬 Тема та Мета роботи</h2>
             <div class="card-subtitle">Сторінка 17 друкованого зошита</div>
@@ -36,35 +36,27 @@
         </div>
 
         <p style="font-size:14px; font-weight:800; margin-bottom:8px; color:#334155;">
-          🧰 Обладнання та матеріали (натисни, щоб зібрати на лабораторний стіл):
+          🧰 Обладнання та матеріали:
         </p>
         <div class="equip-grid" id="equipGrid">
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🍊 Мандарин</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🍵 2 пакетики чаю</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🧪 Розчин спирту</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>💧 Вода дистильована</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>♨️ Гаряча вода (окріп)</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🧣 2 клаптики тканини</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🍽️ 2 пластикові тарілки</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🌡️ Термометр кімнатний</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🥛 2 прозорі склянки</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🧱 2 шматочки пластиліну</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🥣 Чашка Петрі</div>
-          <div class="equip-item" onclick="toggleEquip(this)"><div class="equip-checkbox">✓</div>🧪 Хімічна склянка & колба</div>
+          <div class="equip-item">🍊 Мандарин</div>
+          <div class="equip-item">🍵 2 пакетики чаю</div>
+          <div class="equip-item">🧪 Розчин спирту</div>
+          <div class="equip-item">💧 Вода дистильована</div>
+          <div class="equip-item">♨️ Гаряча вода (окріп)</div>
+          <div class="equip-item">🧣 2 клаптики тканини</div>
+          <div class="equip-item">🍽️ 2 пластикові тарілки</div>
+          <div class="equip-item">🌡️ Термометр кімнатний</div>
+          <div class="equip-item">🥛 2 прозорі склянки</div>
+          <div class="equip-item">🧱 2 шматочки пластиліну</div>
+          <div class="equip-item">🥣 Чашка Петрі</div>
+          <div class="equip-item">🧪 Хімічна склянка & колба</div>
         </div>
-
-        <div style="margin-top:20px; text-align:center;">
-          <button class="btn btn-accent" style="width:100%; padding:12px; font-size:15px;" onclick="goToTab('tab-exp1')">
-            🚀 Розпочати досліди ➡️
-          </button>
-        </div>
-      </div>
     </div>
 
     <!-- TAB 1: ЗАВДАННЯ №1 (ВОДА vs СПИРТ) -->
     <div class="tab-content" id="tab-exp1">
-      <div class="card">
-        <div class="card-header">
+<div class="card-header">
           <div>
             <h2 class="card-title">💧 Завдання № 1</h2>
             <div class="card-subtitle">Порівняння швидкості висихання води та спирту</div>
@@ -124,18 +116,11 @@
             </div>
           </div>
         </div>
-
-        <div style="margin-top:16px; display:flex; justify-content:space-between;">
-          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-intro')">⬅️ Назад</button>
-          <button class="btn btn-sm" onclick="goToTab('tab-exp2')">Далі: Мандарин ➡️</button>
-        </div>
-      </div>
     </div>
 
     <!-- TAB 2: ЗАВДАННЯ №2 (МАНДАРИНКА В КЛАСІ) -->
     <div class="tab-content" id="tab-exp2">
-      <div class="card">
-        <div class="card-header">
+<div class="card-header">
           <div>
             <h2 class="card-title">🍊 Завдання № 2</h2>
             <div class="card-subtitle">Поширення запаху в повітрі (дифузія в газах)</div>
@@ -199,18 +184,11 @@
             </table>
           </div>
         </div>
-
-        <div style="margin-top:16px; display:flex; justify-content:space-between;">
-          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-exp1')">⬅️ Дослід 1</button>
-          <button class="btn btn-sm" onclick="goToTab('tab-exp3')">Далі: Чай ➡️</button>
-        </div>
-      </div>
     </div>
 
     <!-- TAB 3: ЗАВДАННЯ №3 (ЧАЙ У ХОЛОДНІЙ І ГАРЯЧІЙ ВОДІ) -->
     <div class="tab-content" id="tab-exp3">
-      <div class="card">
-        <div class="card-header">
+<div class="card-header">
           <div>
             <h2 class="card-title">🍵 Завдання № 3</h2>
             <div class="card-subtitle">Дифузія в рідинах за різної температури</div>
@@ -277,18 +255,11 @@
             </table>
           </div>
         </div>
-
-        <div style="margin-top:16px; display:flex; justify-content:space-between;">
-          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-exp2')">⬅️ Дослід 2</button>
-          <button class="btn btn-sm" onclick="goToTab('tab-exp4')">Далі: Посудини ➡️</button>
-        </div>
-      </div>
     </div>
 
     <!-- TAB 4: ЗАВДАННЯ №4 (ОХОЛОДЖЕННЯ ВОДИ В РІЗНИХ ПОСУДИНАХ) -->
     <div class="tab-content" id="tab-exp4">
-      <div class="card">
-        <div class="card-header">
+<div class="card-header">
           <div>
             <h2 class="card-title">🌡️ Завдання № 4</h2>
             <div class="card-subtitle">Вплив форми посудини та площі поверхні на випаровування</div>
@@ -370,18 +341,11 @@
             </div>
           </div>
         </div>
-
-        <div style="margin-top:16px; display:flex; justify-content:space-between;">
-          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-exp3')">⬅️ Дослід 3</button>
-          <button class="btn btn-sm" onclick="goToTab('tab-exp5')">Далі: Пластилін ➡️</button>
-        </div>
-      </div>
     </div>
 
     <!-- TAB 5: ЗАВДАННЯ №5 (ПЛАСТИЛІН - ДИФУЗІЯ У ТВЕРДИХ ТІЛАХ) -->
     <div class="tab-content" id="tab-exp5">
-      <div class="card">
-        <div class="card-header">
+<div class="card-header">
           <div>
             <h2 class="card-title">🧱 Завдання № 5</h2>
             <div class="card-subtitle">Дифузія у твердих тілах (пластилін)</div>
@@ -433,18 +397,11 @@
             </div>
           </div>
         </div>
-
-        <div style="margin-top:16px; display:flex; justify-content:space-between;">
-          <button class="btn btn-sm btn-secondary" onclick="goToTab('tab-exp4')">⬅️ Дослід 4</button>
-          <button class="btn btn-sm btn-accent" onclick="goToTab('tab-summary')">Перейти до Висновків 🏆</button>
-        </div>
-      </div>
     </div>
 
     <!-- TAB 6: ЗАГАЛЬНИЙ ВИСНОВОК РОБОТИ -->
     <div class="tab-content" id="tab-summary">
-      <div class="card">
-        <div class="card-header">
+<div class="card-header">
           <div>
             <h2 class="card-title">🏆 Загальний висновок роботи</h2>
             <div class="card-subtitle">Підсумок усіх дослідів для запису в зошит</div>
@@ -456,18 +413,18 @@
         </div>
 
         <!-- Interactive Summary Cards -->
-        <div style="background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px;">
-          <h3 style="font-size:15px; font-weight:800; color:#1e293b; margin-bottom:10px;">💡 Головні закони природи, які ми відкрили:</h3>
+        <div style="margin-bottom:12px;">
+          <h3 style="font-size:14px; font-weight:800; color:#1e293b; margin-bottom:8px;">💡 Головні закони природи, які ми відкрили:</h3>
 
-          <div style="font-size:13px; line-height:1.6; color:#334155;">
-            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:10px 12px; margin-bottom:10px;">
+          <div style="font-size:13px; line-height:1.5; color:#334155; display:flex; flex-direction:column; gap:6px;">
+            <div style="background:#f0fdf4; border-left:3px solid #10b981; border-radius:4px; padding:6px 8px;">
               <strong style="color:#15803d;">🔹 1. Швидкість випаровування залежить від:</strong><br>
               • <em>Роду рідини:</em> спирт випаровується швидше за воду, бо зв'язки між його молекулами слабші;<br>
               • <em>Площі вільної поверхні:</em> у широкій чашці Петрі рідина випарувалася й охолола найшвидше;<br>
               • <em>Температури:</em> чим тепліша рідина, тим більше молекул мають енергію вилетіти у повітря.
             </div>
 
-            <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 12px;">
+            <div style="background:#eff6ff; border-left:3px solid #3b82f6; border-radius:4px; padding:6px 8px;">
               <strong style="color:#1d4ed8;">🔹 2. Швидкість дифузії залежить від:</strong><br>
               • <em>Агрегатного стану:</em> найшвидше — у газах (запах мандарина), повільніше — у рідинах (чай), практично непомітно за короткий час — у твердих тілах (пластилін);<br>
               • <em>Температури:</em> із підвищенням температури рух молекул прискорюється, тому дифузія відбувається значно швидше (чай у гарячій воді заварився миттєво).
@@ -478,19 +435,14 @@
         <!-- Notebook Text Block -->
         <div class="notebook-section">
           <div class="notebook-title">✍️ Текст для запису у висновок практичної роботи</div>
-          <div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:12px 14px; font-size:14px; line-height:1.6; color:#0f172a;" id="conclusionText">
+          <div style="background:#f0fdf4; border-left:3px solid #10b981; border-radius:4px; padding:8px 10px; font-size:13.5px; line-height:1.5; color:#065f46;" id="conclusionText">
             Виконуючи практичну роботу, ми з'ясували, що випаровування та дифузія зумовлені неперервним хаотичним рухом молекул. Швидкість випаровування залежить від роду рідини та площі її вільної поверхні. Швидкість дифузії залежить від агрегатного стану речовини (найшвидше протікає в газах, повільніше в рідинах і практично непомітна у твердих тілах) та температури: із нагріванням швидкість руху частинок зростає, тому процес дифузії суттєво прискорюється.
-          </div>
-          <div style="margin-top:12px; display:flex; gap:8px;">
-            <button class="btn btn-sm btn-secondary" onclick="copyConclusion()">📋 Скопіювати текст</button>
-            <button class="btn btn-sm btn-accent" onclick="window.print()">🖨️ Роздрукувати / Зберегти PDF</button>
           </div>
         </div>
 
-        <div style="margin-top:16px; text-align:center;">
+        <div style="margin-top:10px; text-align:center;">
           <button class="btn btn-secondary" onclick="goToTab('tab-intro')">🔄 Повернутися на початок</button>
         </div>
-      </div>
     </div>
 
   </div>
@@ -502,8 +454,8 @@
     <button class="btn btn-sm btn-accent" id="btnNextTab" onclick="navStep(1)">Наступна ➡️</button>
   </nav>
 
-  <!-- Modal for Original Notebook Scans -->
-  <div class="modal-backdrop" id="scanModal">
+  <!-- Modals -->
+<div class="modal-backdrop" id="scanModal">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title">📖 Сторінки друкованого зошита</h3>
@@ -538,6 +490,14 @@
   </div>
 
   <!-- Interactive JavaScript Engine -->
-  <script src="js/pr2.js"></script>
+
+  <!-- Modular Scripts -->
+  <script src="js/pr2-core.js"></script>
+  <script src="js/pr2-modals.js"></script>
+  <script src="js/pr2-exp1.js"></script>
+  <script src="js/pr2-exp2.js"></script>
+  <script src="js/pr2-exp3.js"></script>
+  <script src="js/pr2-exp4.js"></script>
+  <script src="js/pr2-exp5.js"></script>
 </body>
 </html>

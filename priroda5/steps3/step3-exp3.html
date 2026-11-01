@@ -1,0 +1,85 @@
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🌬️ Завдання № 3</h2>
+    <div class="card-subtitle">Доведення, що повітря є газоподібним розчином</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Завдання із зошита (ст. 23):</strong> Доведи, що повітря є розчином. Пригадай склад повітря. Запиши, що є розчинником, а що — розчинюваною речовиною (розчинюваними речовинами) такого розчину.
+</div>
+
+<!-- Interactive Air Chamber -->
+<div class="sim-box">
+  <canvas id="canvasExp3" class="sim-canvas" width="600" height="230"></canvas>
+
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary gas-btn" data-gas="all" onclick="highlightGas('all')">✨ Усі гази (Однорідна суміш)</button>
+    <button class="btn btn-sm btn-secondary gas-btn" data-gas="n2" onclick="highlightGas('n2')">🔵 Азот N₂ (Розчинник — 78%)</button>
+    <button class="btn btn-sm btn-secondary gas-btn" data-gas="o2" onclick="highlightGas('o2')">🔴 Кисень O₂ (Розчинювана — 21%)</button>
+    <button class="btn btn-sm btn-secondary gas-btn" data-gas="other" onclick="highlightGas('other')">🟢 Інші гази (~1%)</button>
+  </div>
+
+  <div id="airStatus" class="sim-status" style="color:#0369a1;">
+    Повітря — це природний газовий розчин: молекули азоту, кисню та інших газів утворюють однорідну суміш.
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Чому саме АЗОТ вважають розчинником у повітрі?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 3, 'Точно! За загальним хімічним правилом, розчинником у суміші вважають ту речовину, якої кількісно найбільше (азоту в повітрі аж 78%!).')">
+      🔵 Тому що його вміст у повітрі найбільший (78%)
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">
+      🔴 Тому що він найважчий за масою
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">
+      ⚪ Тому що він рідкий при кімнатній температурі
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Короткий запис у зошит (ст. 23)</div>
+
+  <div class="q-block">
+    <label class="q-label">Відповідь на 2 рядки зошита:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Повітря — це однорідна суміш газів. <strong>Розчинник:</strong> азот (78%). <strong>Розчинювані речовини:</strong> кисень (21%), вуглекислий газ та інші гази.
+    </div>
+  </div>
+
+  <!-- Visual summary table -->
+  <div class="table-container" style="margin-top:8px;">
+    <table class="nb-table">
+      <thead>
+        <tr>
+          <th>Компонент повітря</th>
+          <th>Частка за об'ємом</th>
+          <th>Роль у розчині</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f0fdf4;">
+          <td><strong>Азот (\(N_2\))</strong></td>
+          <td><strong>78 %</strong></td>
+          <td><strong style="color:#047857;">Розчинник</strong> (найбільша частка)</td>
+        </tr>
+        <tr>
+          <td><strong>Кисень (\(O_2\))</strong></td>
+          <td><strong>21 %</strong></td>
+          <td><span style="color:#0369a1; font-weight:700;">Розчинювана речовина</span></td>
+        </tr>
+        <tr>
+          <td><strong>Аргон, \(CO_2\), водяна пара</strong></td>
+          <td><strong>~ 1 %</strong></td>
+          <td><span style="color:#0369a1; font-weight:700;">Розчинювані речовини</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

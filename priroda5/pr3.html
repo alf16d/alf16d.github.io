@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Практична робота №3 — Досліджуємо розчинність деяких речовин | 5 клас</title>
+  <!-- Modular CSS styles for PR3 -->
+  <link rel="stylesheet" href="css/pr3-base.css">
+  <link rel="stylesheet" href="css/pr3-sim.css">
+  <link rel="stylesheet" href="css/pr3-workbook.css">
+  <link rel="stylesheet" href="css/pr3-modals.css">
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header>
+    <div class="header-info" style="display:flex; flex-direction:row; align-items:center; gap:8px;">
+      <a href="index.html" class="icon-btn" style="text-decoration:none; padding:4px 8px; font-size:12px;" title="До списку робіт">🏠 Меню</a>
+      <h1 class="header-title">Практична робота № 3</h1>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- TAB 0: ВСТУП ТА ОБЛАДНАННЯ -->
+    <div class="tab-content active" id="tab-intro">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🔬 Тема та Мета роботи</h2>
+    <div class="card-subtitle">Сторінки 22–23 друкованого зошита</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  <strong>Тема:</strong> 16. Досліджуємо розчинність деяких речовин.<br>
+  <strong>Мета:</strong> дослідити здатність лимонної кислоти, крохмалю, солі, соди й борошна розчинятися у воді; з'ясувати залежність розчинності твердих речовин від температури за графіком; довести, що повітря є розчином; пояснити дію органічних розчинників на жирні плями.
+</div>
+
+<p style="font-size:14px; font-weight:800; margin-bottom:8px; color:#334155;">
+  🧰 Обладнання та речовини (натискай для перевірки):
+</p>
+<div class="equip-grid" id="equipGrid">
+  <div class="equip-item" onclick="toggleEquip(this)">💧 Вода кімнатна</div>
+  <div class="equip-item" onclick="toggleEquip(this)">♨️ Гаряча вода</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🥛 Хімічні склянки</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🥄 Скляні палички</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🍋 Лимонна кислота</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🌾 Крохмаль</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🧂 Кухонна сіль</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🧁 Харчова сода</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🌾 Борошно пшеничне</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🍬 Цукор</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🌡️ Термометр</div>
+  <div class="equip-item" onclick="toggleEquip(this)">🧴 Ацетон & тканина</div>
+</div>
+
+<div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 12px; margin-top:8px;">
+  <h3 style="font-size:13.5px; font-weight:800; color:#1e40af; margin-bottom:4px;">💡 Що таке розчинність?</h3>
+  <p style="font-size:12.5px; line-height:1.45; color:#1e3a8a;">
+    <strong>Розчинність</strong> — це здатність речовини змішуватися з розчинником (наприклад, з водою) з утворенням однорідної системи — <em>розчину</em>. Якщо речовина розчиняється, її частинки (молекули або іони) рівномірно розподіляються між молекулами розчинника так, що їх неможливо побачити навіть у мікроскоп!
+  </p>
+</div>
+    </div>
+
+    <!-- TAB 1: ЗАВДАННЯ №1 (РОЗЧИННІСТЬ РЕЧОВИН) -->
+    <div class="tab-content" id="tab-exp1">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🧪 Завдання № 1</h2>
+    <div class="card-subtitle">Дослідження розчинності різних твердих речовин у воді</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Інструкція із зошита (ст. 22):</strong> Досліди, чи розчиняються у воді <em>лимонна кислота</em>, <em>крохмаль</em>, <em>кухонна сіль</em>, <em>харчова сода</em> та <em>борошно</em>. Запиши свої спостереження.
+</div>
+
+<!-- Interactive Simulation Container -->
+<div class="sim-box">
+  <!-- Selector pills for substances -->
+  <div class="selector-pills">
+    <button class="substance-pill active" data-substance="citric" onclick="setSubstance('citric')">🍋 Лимонна кислота</button>
+    <button class="substance-pill" data-substance="starch" onclick="setSubstance('starch')">🌾 Крохмаль</button>
+    <button class="substance-pill" data-substance="salt" onclick="setSubstance('salt')">🧂 Кухонна сіль</button>
+    <button class="substance-pill" data-substance="soda" onclick="setSubstance('soda')">🧁 Харчова сода</button>
+    <button class="substance-pill" data-substance="flour" onclick="setSubstance('flour')">🌾 Борошно</button>
+  </div>
+
+  <canvas id="canvasExp1" class="sim-canvas" width="600" height="230"></canvas>
+
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary" onclick="addSubstance()">🥄 Додати речовину</button>
+    <button class="btn btn-sm btn-accent" onclick="stirExp1()">🌀 Перемішати паличкою</button>
+    <button class="btn btn-sm btn-amber" onclick="waitAndSettle()">⏳ Зачекати 10 хв (осад)</button>
+    <button class="btn btn-sm btn-purple" id="btnMicroscopeExp1" onclick="toggleMicroscopeExp1()">🔬 Погляд у мікроскоп</button>
+    <button class="btn btn-sm btn-secondary" onclick="resetExp1()">🔄 Скинути</button>
+  </div>
+
+  <div id="exp1Status" class="sim-status" style="color:#0369a1;">
+    Виберіть речовину та натисніть «🥄 Додати речовину», щоб розпочати дослід!
+  </div>
+</div>
+
+<!-- Mini-Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Які речовини з досліджених є практично НЕРОЗЧИННИМИ у холодній воді?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 1, 'Правильно! Борошно та крохмаль не розчиняються у воді й утворюють завись (суспензію), яка з часом осідає на дно.')">
+      🌾 Борошно та крохмаль
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">
+      🧂 Кухонна сіль та лимонна кислота
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">
+      🧁 Лише харчова сода
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook entries -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Короткі записи для зошита (ст. 22)</div>
+
+  <div class="q-block">
+    <label class="q-label">Лимонна кислота:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Добре розчиняється, розчин прозорий без осаду.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Крохмаль:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Не розчиняється, вода каламутна, осідає на дно.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Кухонна сіль:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Добре розчиняється, розчин прозорий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Харчова сода:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Малорозчинна (розчиняється частково).
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Борошно:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Не розчиняється, утворює білий осад.
+    </div>
+  </div>
+
+  <!-- Summary Table for notebook -->
+  <div class="table-container" style="margin-top:10px;">
+    <table class="nb-table">
+      <thead>
+        <tr>
+          <th>Речовина</th>
+          <th>Розчинність у воді</th>
+          <th>Зовнішній вигляд суміші</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Лимонна кислота</strong></td>
+          <td><span style="color:#15803d; font-weight:700;">Добре розчинна</span></td>
+          <td>Прозорий, безбарвний розчин</td>
+        </tr>
+        <tr>
+          <td><strong>Кухонна сіль</strong></td>
+          <td><span style="color:#15803d; font-weight:700;">Добре розчинна</span></td>
+          <td>Прозорий розчин, без осаду</td>
+        </tr>
+        <tr>
+          <td><strong>Харчова сода</strong></td>
+          <td><span style="color:#b45309; font-weight:700;">Малорозчинна</span></td>
+          <td>Слабко-каламутний або прозорий розчин</td>
+        </tr>
+        <tr>
+          <td><strong>Крохмаль</strong></td>
+          <td><span style="color:#b91c1c; font-weight:700;">Практично нерозчинний</span></td>
+          <td>Каламутна завись, осідає на дно</td>
+        </tr>
+        <tr>
+          <td><strong>Борошно</strong></td>
+          <td><span style="color:#b91c1c; font-weight:700;">Практично нерозчинне</span></td>
+          <td>Непрозора біла суспензія з осадом</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+    </div>
+
+    <!-- TAB 2: ЗАВДАННЯ №2 (ГРАФІК РОЗЧИННОСТІ) -->
+    <div class="tab-content" id="tab-exp2">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">📈 Завдання № 2</h2>
+    <div class="card-subtitle">Графік залежності розчинності від температури та аналіз тверджень</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Завдання із зошита (ст. 22–23):</strong> Розглянь графік залежності розчинності цукру й окремих неорганічних солей від температури в інтервалі від 0 до 100 °C. Проаналізуй наведені твердження та вибери правильний варіант відповіді.
+</div>
+
+<!-- Interactive Chart Simulation -->
+<div class="sim-box">
+  <canvas id="canvasExp2" class="sim-canvas" width="600" height="250"></canvas>
+
+  <!-- Temperature Slider Controls -->
+  <div class="slider-row">
+    <span class="slider-label">🌡️ Температура розчину:</span>
+    <input type="range" min="0" max="100" value="40" class="slider-input" id="tempExp2Slider" oninput="updateExp2Temp(this.value)">
+    <span class="slider-val" id="tempExp2Val">40 °C</span>
+  </div>
+
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-accent" onclick="highlightExp2Curve('sugar')">🍬 Перевірити Цукор (0°C vs 40°C)</button>
+    <button class="btn btn-sm btn-primary" onclick="highlightExp2Curve('salt')">🧂 Перевірити Сіль NaCl (0°C..100°C)</button>
+    <button class="btn btn-sm btn-secondary" onclick="highlightExp2Curve('all')">📊 Усі графіки</button>
+  </div>
+
+  <div id="exp2Status" class="sim-status" style="color:#0369a1;">
+    Рухай повзунок температури або натискай кнопки, щоб побачити точні значення на графіку!
+  </div>
+</div>
+
+<!-- Test Question from Workbook Page 23 -->
+<div class="mini-quiz" style="background:#f0fdf4; border-color:#86efac;">
+  <div class="mini-quiz-title" style="color:#166534; font-size:13px;">
+    📝 Завдання-тест із зошита (ст. 23): Проаналізуй твердження
+  </div>
+  <div style="font-size:12.5px; line-height:1.45; color:#1f2937; margin-bottom:8px; background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #d1fae5;">
+    <strong>І.</strong> Розчинність цукру за збільшення температури від 0° до 40 °C подвоюється.<br>
+    <strong>ІІ.</strong> Розчинність кухонної солі практично не змінюється в широкому діапазоні температур.
+  </div>
+
+  <div style="font-size:12px; font-weight:700; color:#374151; margin-bottom:5px;">
+    З-поміж наведених тверджень обведи правильну відповідь:
+  </div>
+
+  <div class="quiz-options" id="testOptionsPR3">
+    <button class="quiz-btn" onclick="checkTestPR3(this, 'А')">
+      <span><strong>А</strong> &nbsp; обидві правильні</span>
+    </button>
+    <button class="quiz-btn" onclick="checkTestPR3(this, 'Б')">
+      <span><strong>Б</strong> &nbsp; правильна лише І</span>
+    </button>
+    <button class="quiz-btn" onclick="checkTestPR3(this, 'В')">
+      <span><strong>В</strong> &nbsp; правильна лише ІІ</span>
+    </button>
+    <button class="quiz-btn" onclick="checkTestPR3(this, 'Г')">
+      <span><strong>Г</strong> &nbsp; обидві неправильні</span>
+    </button>
+  </div>
+
+  <div id="testFeedbackPR3" style="display:none; margin-top:8px;"></div>
+</div>
+
+<!-- Notebook Explanation and Records -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Запис у зошит (ст. 23)</div>
+
+  <div class="q-block">
+    <label class="q-label">Правильна відповідь:</label>
+    <div class="answer-box">
+      ✏️ <strong>Обвести літеру: В (правильна лише ІІ)</strong>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Коротке пояснення:</label>
+    <div class="answer-box" style="background:#ffffff; border:1px solid #e2e8f0; border-left:3px solid #0284c7; color:#1e293b; font-size:12.5px;">
+      • <strong>І — неправильне:</strong> розчинність цукру зросла з 180 г до 240 г (не подвоїлася).<br>
+      • <strong>ІІ — правильне:</strong> лінія солі NaCl майже рівна (36 г ➔ 40 г), розчинність майже не змінюється.
+    </div>
+  </div>
+</div>
+    </div>
+
+    <!-- TAB 3: ЗАВДАННЯ №3 (ПОВІТРЯ ЯК РОЗЧИН) -->
+    <div class="tab-content" id="tab-exp3">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🌬️ Завдання № 3</h2>
+    <div class="card-subtitle">Доведення, що повітря є газоподібним розчином</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Завдання із зошита (ст. 23):</strong> Доведи, що повітря є розчином. Пригадай склад повітря. Запиши, що є розчинником, а що — розчинюваною речовиною (розчинюваними речовинами) такого розчину.
+</div>
+
+<!-- Interactive Air Chamber -->
+<div class="sim-box">
+  <canvas id="canvasExp3" class="sim-canvas" width="600" height="230"></canvas>
+
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary gas-btn" data-gas="all" onclick="highlightGas('all')">✨ Усі гази (Однорідна суміш)</button>
+    <button class="btn btn-sm btn-secondary gas-btn" data-gas="n2" onclick="highlightGas('n2')">🔵 Азот N₂ (Розчинник — 78%)</button>
+    <button class="btn btn-sm btn-secondary gas-btn" data-gas="o2" onclick="highlightGas('o2')">🔴 Кисень O₂ (Розчинювана — 21%)</button>
+    <button class="btn btn-sm btn-secondary gas-btn" data-gas="other" onclick="highlightGas('other')">🟢 Інші гази (~1%)</button>
+  </div>
+
+  <div id="airStatus" class="sim-status" style="color:#0369a1;">
+    Повітря — це природний газовий розчин: молекули азоту, кисню та інших газів утворюють однорідну суміш.
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Чому саме АЗОТ вважають розчинником у повітрі?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 3, 'Точно! За загальним хімічним правилом, розчинником у суміші вважають ту речовину, якої кількісно найбільше (азоту в повітрі аж 78%!).')">
+      🔵 Тому що його вміст у повітрі найбільший (78%)
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">
+      🔴 Тому що він найважчий за масою
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">
+      ⚪ Тому що він рідкий при кімнатній температурі
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Короткий запис у зошит (ст. 23)</div>
+
+  <div class="q-block">
+    <label class="q-label">Відповідь на 2 рядки зошита:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Повітря — це однорідна суміш газів. <strong>Розчинник:</strong> азот (78%). <strong>Розчинювані речовини:</strong> кисень (21%), вуглекислий газ та інші гази.
+    </div>
+  </div>
+
+  <!-- Visual summary table -->
+  <div class="table-container" style="margin-top:8px;">
+    <table class="nb-table">
+      <thead>
+        <tr>
+          <th>Компонент повітря</th>
+          <th>Частка за об'ємом</th>
+          <th>Роль у розчині</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f0fdf4;">
+          <td><strong>Азот (\(N_2\))</strong></td>
+          <td><strong>78 %</strong></td>
+          <td><strong style="color:#047857;">Розчинник</strong> (найбільша частка)</td>
+        </tr>
+        <tr>
+          <td><strong>Кисень (\(O_2\))</strong></td>
+          <td><strong>21 %</strong></td>
+          <td><span style="color:#0369a1; font-weight:700;">Розчинювана речовина</span></td>
+        </tr>
+        <tr>
+          <td><strong>Аргон, \(CO_2\), водяна пара</strong></td>
+          <td><strong>~ 1 %</strong></td>
+          <td><span style="color:#0369a1; font-weight:700;">Розчинювані речовини</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+    </div>
+
+    <!-- TAB 4: ЗАВДАННЯ №4 (ПЛЯМА ТА АЦЕТОН) -->
+    <div class="tab-content" id="tab-exp4">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🧴 Завдання № 4</h2>
+    <div class="card-subtitle">Чому для виведення застарілих жирних плям використовують ацетон?</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Запитання із зошита (ст. 22):</strong> Дай відповідь на запитання: <em>Чому для виведення застарілої жирної плями на одязі використовують ацетон?</em>
+</div>
+
+<!-- Simulation Container -->
+<div class="sim-box">
+  <canvas id="canvasExp4" class="sim-canvas" width="600" height="230"></canvas>
+
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-secondary" onclick="testWaterStain()">💧 Спробувати водою (пляма 1)</button>
+    <button class="btn btn-sm btn-purple" onclick="testAcetoneStain()">🧴 Нанести ацетон (пляма 2)</button>
+    <button class="btn btn-sm btn-success" onclick="blotStain()">🧻 Промокнути серветкою</button>
+    <button class="btn btn-sm btn-secondary" onclick="resetExp4()">🔄 Скинути</button>
+  </div>
+
+  <div id="exp4Status" class="sim-status" style="color:#0369a1;">
+    Порівняйте дію води та ацетону на жирну пляму за допомогою кнопок вище!
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Яке головне правило хімії пояснює дію розчинників на плями?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 4, 'Абсолютно вірно! Полярні речовини розчиняються у полярних розчинниках (як цукор чи сіль у воді), а неполярні (жири, олії) — у неполярних органічних розчинниках (ацетоні, бензині, спирті).')">
+      ✨ «Подібне розчиняється в подібному»
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 4)">
+      🧊 «Усе розчиняється лише при охолодженні»
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 4)">
+      💨 «Вода розчиняє абсолютно будь-які речовини у світі»
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Короткий запис у зошит (ст. 22)</div>
+
+  <div class="q-block">
+    <label class="q-label">Чому для виведення плями використовують ацетон?</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Жир не розчиняється у воді, але легко розчиняється в органічному розчиннику — ацетоні.
+    </div>
+  </div>
+
+  <div style="background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0; padding:8px 10px; margin-top:8px; font-size:12px; line-height:1.45; color:#475569;">
+    ⚠️ <strong>Правило безпеки:</strong> Ацетон легкозаймистий та має різкий запах. Роботу з органічними розчинниками слід проводити лише в добре провітрюваному приміщенні подалі від джерел вогню!
+  </div>
+</div>
+    </div>
+
+    <!-- TAB 5: ЗАГАЛЬНИЙ ВИСНОВОК ТА САМООЦІНКА -->
+    <div class="tab-content" id="tab-summary">
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🏆 Загальний висновок роботи</h2>
+    <div class="card-subtitle">Підсумок практичної роботи для запису в зошит</div>
+  </div>
+</div>
+
+<div class="tip-box success">
+  🎉 <strong>Вітаємо!</strong> Усі завдання практичної роботи № 3 успішно досліджено та проаналізовано!
+</div>
+
+<!-- Key Takeaways -->
+<div style="margin-bottom:12px;">
+  <h3 style="font-size:14px; font-weight:800; color:#1e293b; margin-bottom:8px;">💡 Головні правила та закони природи, які ми засвоїли:</h3>
+
+  <div style="font-size:13px; line-height:1.5; color:#334155; display:flex; flex-direction:column; gap:6px;">
+    <div style="background:#f0fdf4; border-left:3px solid #10b981; border-radius:4px; padding:6px 8px;">
+      <strong style="color:#15803d;">🔹 1. Класифікація речовин за розчинністю у воді:</strong><br>
+      • <em>Добре розчинні:</em> кухонна сіль, цукор, лимонна кислота (утворюють прозорий істинний розчин без осаду);<br>
+      • <em>Малорозчинні:</em> харчова сода, гіпс;<br>
+      • <em>Практично нерозчинні:</em> крохмаль, пшеничне борошно, пісок, жир (утворюють каламутну завись / суспензію, що з часом осідає на дно).
+    </div>
+
+    <div style="background:#eff6ff; border-left:3px solid #3b82f6; border-radius:4px; padding:6px 8px;">
+      <strong style="color:#1d4ed8;">🔹 2. Вплив температури на розчинність:</strong><br>
+      • Для більшості речовин (цукор, калійна селітра) розчинність значно зростає при нагріванні;<br>
+      • Для деяких речовин (як кухонна сіль \(NaCl\)) розчинність майже не залежить від температури і залишається сталою (~36–40 г на 100 г води);<br>
+      • Існують рідкісні речовини (як сульфат церію), розчинність яких при нагріванні навіть зменшується.
+    </div>
+
+    <div style="background:#fffbeb; border-left:3px solid #f59e0b; border-radius:4px; padding:6px 8px;">
+      <strong style="color:#b45309;">🔹 3. Розчини бувають не лише рідкими:</strong><br>
+      • Повітря — це природний однорідний газовий розчин. Розчинником у ньому є <strong>азот (78%)</strong>, а розчинюваними речовинами — кисень (21%), вуглекислий газ та інші гази.
+    </div>
+
+    <div style="background:#fdf2f8; border-left:3px solid #ec4899; border-radius:4px; padding:6px 8px;">
+      <strong style="color:#be185d;">🔹 4. Різні розчинники та плями:</strong><br>
+      • Вода не розчиняє жири й олії. Для їх розчинення використовують органічні розчинники (ацетон, спирт) за правилом «подібне розчиняється в подібному».
+    </div>
+  </div>
+</div>
+
+<!-- Notebook Conclusion Text -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Короткий висновок для запису в зошит</div>
+  <div class="answer-box" style="font-size:13px; line-height:1.5; padding:8px 10px;">
+    ✏️ <strong>Запис у зошит:</strong><br>
+    1. Сіль і лимонна кислота — добре розчинні у воді, а крохмаль і борошно — нерозчинні.<br>
+    2. При нагріванні розчинність цукру збільшується, а солі — майже не змінюється.<br>
+    3. Повітря є газоподібним розчином, де розчинник — азот (78%).<br>
+    4. Жир не розчиняється у воді, але розчиняється в ацетоні.
+  </div>
+</div>
+
+<div style="margin-top:12px; display:flex; justify-content:center; gap:8px;">
+  <button class="btn btn-secondary" onclick="goToTab('tab-intro')">🔄 Почати спочатку</button>
+  <a href="index.html" class="btn btn-accent">🏠 До переліку робіт</a>
+</div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation Bar for Mobile -->
+  <nav class="bottom-bar">
+    <button class="btn btn-sm btn-secondary" id="btnPrevTab" onclick="navStep(-1)">⬅️ Попередня</button>
+    <div style="font-size:13px; font-weight:800; color:var(--text-muted);" id="currentStepIndicator">Крок 1 з 6</div>
+    <button class="btn btn-sm btn-accent" id="btnNextTab" onclick="navStep(1)">Наступна ➡️</button>
+  </nav>
+
+  <!-- Modals -->
+<!-- Modals removed -->
+
+  <!-- Modular Scripts for PR3 -->
+  <script src="js/pr3-core.js"></script>
+  <script src="js/pr3-modals.js"></script>
+  <script src="js/pr3-exp1.js"></script>
+  <script src="js/pr3-exp2.js"></script>
+  <script src="js/pr3-exp3.js"></script>
+  <script src="js/pr3-exp4.js"></script>
+</body>
+</html>

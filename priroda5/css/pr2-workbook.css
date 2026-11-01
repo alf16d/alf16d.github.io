@@ -1,0 +1,130 @@
+/* Workbook fields, Answer Boxes, Tables and Equipment Checklist */
+
+.notebook-section {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 8px;
+}
+
+.notebook-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border);
+}
+
+.q-block {
+  margin-bottom: 6px;
+}
+
+.q-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 2px;
+  display: block;
+}
+
+/* Notebook Answer Box (Clean left-border accent, maximum width for text) */
+.answer-box {
+  background: #f0fdf4;
+  border: none;
+  border-left: 3px solid #10b981;
+  border-radius: 4px;
+  padding: 5px 8px;
+  margin-top: 2px;
+  font-size: 13px;
+  color: #065f46;
+  line-height: 1.45;
+  display: block;
+}
+
+.answer-box strong {
+  color: #047857;
+}
+
+/* Table styles matching the notebook */
+.table-container {
+  overflow-x: auto;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+table.nb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+  background: #fff;
+}
+
+table.nb-table th {
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 800;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+table.nb-table td {
+  padding: 5px 8px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: top;
+}
+
+table.nb-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Checklist / Grid for equipment */
+.equip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.equip-item {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+@media (max-width: 480px) {
+  .answer-box {
+    padding: 4px 6px;
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+  .equip-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+  .equip-item {
+    padding: 5px 6px;
+    font-size: 11.5px;
+  }
+}
+
+@media print {
+  .answer-box {
+    display: block !important;
+    border: 1px solid #ccc;
+  }
+}

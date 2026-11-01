@@ -1,0 +1,67 @@
+<div class="card-header">
+          <div>
+            <h2 class="card-title">🍵 Завдання № 3</h2>
+            <div class="card-subtitle">Дифузія в рідинах за різної температури</div>
+          </div>
+          <span class="action-badge" style="background:#fee2e2; color:#991b1b;">Дослід 3</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Налий в одну прозору склянку воду кімнатної температури, а в другу — гарячої води. Опусти однакові пакетики чорного чаю. Спостерігай за змінами.
+        </div>
+
+        <!-- Simulation Box -->
+        <div class="sim-box">
+          <canvas id="canvasExp3" class="sim-canvas" width="600" height="240"></canvas>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-accent" id="btnDropTea" onclick="dropTeaBags()">🍵 Опустити пакетики у воду</button>
+            <button class="btn btn-sm btn-purple" id="btnMicroscope" onclick="toggleMicroscope()">🔬 Мікроскоп частинок</button>
+            <button class="btn btn-sm btn-secondary" onclick="resetExp3()">🔄 Скинути</button>
+          </div>
+          <div id="teaStatus" class="sim-status" style="color:#b45309;">
+            Опусти чайні пакетики, щоб побачити забарвлення води!
+          </div>
+        </div>
+
+        <!-- Mini Quiz -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: За якої температури дифузія в рідині відбувається швидше?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 3)">♨️ У гарячій воді</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">❄️ У холодній воді</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">⚖️ Однаково</button>
+          </div>
+        </div>
+
+        <!-- Notebook Table -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Запитання та таблиця для зошита (ст. 18)</div>
+          
+          <div class="q-block">
+            <label class="q-label">У якій склянці вода швидше зафарбувалась? Чому?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Вода набагато швидше зафарбувалася у склянці з гарячою водою, тому що зі збільшенням температури швидкість руху молекул зростає і дифузія відбувається значно швидше.
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="nb-table">
+              <thead>
+                <tr>
+                  <th style="width:50%;">Спостереження</th>
+                  <th style="width:50%;">Висновки</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color:#0f172a; line-height:1.45; background:#f0fdf4;">
+                    ✏️ У склянці з гарячою водою забарвлення чаю з'явилося миттєво і швидко заповнило всю склянку насиченим кольором. У холодній воді заварка опускалася повільними цівками на дно, і вода зафарбовувалася дуже мляво.
+                  </td>
+                  <td style="color:#0f172a; line-height:1.45; background:#f0fdf4;">
+                    ✏️ Швидкість дифузії безпосередньо залежить від <strong>температури</strong>. У гарячій воді молекули рухаються набагато швидше і сильніше штовхають частинки чаю, тому змішування відбувається в рази інтенсивніше.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>

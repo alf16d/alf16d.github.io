@@ -1,0 +1,84 @@
+<div class="card-header">
+  <div>
+    <h2 class="card-title">📈 Завдання № 2</h2>
+    <div class="card-subtitle">Графік залежності розчинності від температури та аналіз тверджень</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Завдання із зошита (ст. 22–23):</strong> Розглянь графік залежності розчинності цукру й окремих неорганічних солей від температури в інтервалі від 0 до 100 °C. Проаналізуй наведені твердження та вибери правильний варіант відповіді.
+</div>
+
+<!-- Interactive Chart Simulation -->
+<div class="sim-box">
+  <canvas id="canvasExp2" class="sim-canvas" width="600" height="250"></canvas>
+
+  <!-- Temperature Slider Controls -->
+  <div class="slider-row">
+    <span class="slider-label">🌡️ Температура розчину:</span>
+    <input type="range" min="0" max="100" value="40" class="slider-input" id="tempExp2Slider" oninput="updateExp2Temp(this.value)">
+    <span class="slider-val" id="tempExp2Val">40 °C</span>
+  </div>
+
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-accent" onclick="highlightExp2Curve('sugar')">🍬 Перевірити Цукор (0°C vs 40°C)</button>
+    <button class="btn btn-sm btn-primary" onclick="highlightExp2Curve('salt')">🧂 Перевірити Сіль NaCl (0°C..100°C)</button>
+    <button class="btn btn-sm btn-secondary" onclick="highlightExp2Curve('all')">📊 Усі графіки</button>
+  </div>
+
+  <div id="exp2Status" class="sim-status" style="color:#0369a1;">
+    Рухай повзунок температури або натискай кнопки, щоб побачити точні значення на графіку!
+  </div>
+</div>
+
+<!-- Test Question from Workbook Page 23 -->
+<div class="mini-quiz" style="background:#f0fdf4; border-color:#86efac;">
+  <div class="mini-quiz-title" style="color:#166534; font-size:13px;">
+    📝 Завдання-тест із зошита (ст. 23): Проаналізуй твердження
+  </div>
+  <div style="font-size:12.5px; line-height:1.45; color:#1f2937; margin-bottom:8px; background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #d1fae5;">
+    <strong>І.</strong> Розчинність цукру за збільшення температури від 0° до 40 °C подвоюється.<br>
+    <strong>ІІ.</strong> Розчинність кухонної солі практично не змінюється в широкому діапазоні температур.
+  </div>
+
+  <div style="font-size:12px; font-weight:700; color:#374151; margin-bottom:5px;">
+    З-поміж наведених тверджень обведи правильну відповідь:
+  </div>
+
+  <div class="quiz-options" id="testOptionsPR3">
+    <button class="quiz-btn" onclick="checkTestPR3(this, 'А')">
+      <span><strong>А</strong> &nbsp; обидві правильні</span>
+    </button>
+    <button class="quiz-btn" onclick="checkTestPR3(this, 'Б')">
+      <span><strong>Б</strong> &nbsp; правильна лише І</span>
+    </button>
+    <button class="quiz-btn" onclick="checkTestPR3(this, 'В')">
+      <span><strong>В</strong> &nbsp; правильна лише ІІ</span>
+    </button>
+    <button class="quiz-btn" onclick="checkTestPR3(this, 'Г')">
+      <span><strong>Г</strong> &nbsp; обидві неправильні</span>
+    </button>
+  </div>
+
+  <div id="testFeedbackPR3" style="display:none; margin-top:8px;"></div>
+</div>
+
+<!-- Notebook Explanation and Records -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Запис у зошит (ст. 23)</div>
+
+  <div class="q-block">
+    <label class="q-label">Правильна відповідь:</label>
+    <div class="answer-box">
+      ✏️ <strong>Обвести літеру: В (правильна лише ІІ)</strong>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Коротке пояснення:</label>
+    <div class="answer-box" style="background:#ffffff; border:1px solid #e2e8f0; border-left:3px solid #0284c7; color:#1e293b; font-size:12.5px;">
+      • <strong>І — неправильне:</strong> розчинність цукру зросла з 180 г до 240 г (не подвоїлася).<br>
+      • <strong>ІІ — правильне:</strong> лінія солі NaCl майже рівна (36 г ➔ 40 г), розчинність майже не змінюється.
+    </div>
+  </div>
+</div>

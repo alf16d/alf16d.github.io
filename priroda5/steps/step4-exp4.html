@@ -1,0 +1,82 @@
+<div class="card-header">
+          <div>
+            <h2 class="card-title">🌡️ Завдання № 4</h2>
+            <div class="card-subtitle">Вплив форми посудини та площі поверхні на випаровування</div>
+          </div>
+          <span class="action-badge" style="background:#fef3c7; color:#92400e;">Дослід 4</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Налий однаковий об'єм гарячої води в три різні посудини: <em>чашку Петрі</em>, <em>хімічну склянку</em> та <em>колбу</em>. Виміряй температуру на початку і через 15 хв.
+        </div>
+
+        <!-- Simulation Box -->
+        <div class="sim-box">
+          <canvas id="canvasExp4" class="sim-canvas" width="600" height="240"></canvas>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-accent" id="btnPourHotWater" onclick="pourHotWaterExp4()">♨️ Налити гарячу воду (80°C)</button>
+            <button class="btn btn-sm btn-success" id="btnWait15mExp4" onclick="wait15mExp4()">⏳ Минуло 15 хвилин</button>
+            <button class="btn btn-sm btn-secondary" onclick="resetExp4()">🔄 Скинути</button>
+          </div>
+          <div id="vesselStatus" class="sim-status" style="color:#0369a1;">
+            Натисни «Налити гарячу воду», щоб розпочати вимірювання!
+          </div>
+        </div>
+
+        <!-- Mini Quiz -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: Де вода охолоне найшвидше?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 4)">🥣 У широкій чашці Петрі</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 4)">🧪 У вузькій колбі</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 4)">🥛 У склянці</button>
+          </div>
+        </div>
+
+        <!-- Table from Notebook -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Таблиця вимірювань для зошита (ст. 18)</div>
+
+          <div class="table-container">
+            <table class="nb-table">
+              <thead>
+                <tr>
+                  <th>Посудина</th>
+                  <th style="text-align:center;">T° на початку</th>
+                  <th style="text-align:center;">T° через 15 хв</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Чашка Петрі</strong><br><span style="font-size:11px; color:#64748b;">(дуже широка поверхня)</span></td>
+                  <td style="text-align:center; font-weight:700; color:#dc2626;">80 °C</td>
+                  <td style="text-align:center; font-weight:700; color:#0284c7; background:#e0f2fe;">28 °C</td>
+                </tr>
+                <tr>
+                  <td><strong>Хімічна склянка</strong><br><span style="font-size:11px; color:#64748b;">(середня поверхня)</span></td>
+                  <td style="text-align:center; font-weight:700; color:#dc2626;">80 °C</td>
+                  <td style="text-align:center; font-weight:700; color:#d97706; background:#fef3c7;">44 °C</td>
+                </tr>
+                <tr>
+                  <td><strong>Колба</strong><br><span style="font-size:11px; color:#64748b;">(вузьке горло)</span></td>
+                  <td style="text-align:center; font-weight:700; color:#dc2626;">80 °C</td>
+                  <td style="text-align:center; font-weight:700; color:#dc2626; background:#fee2e2;">58 °C</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">• У якій посудині температура води найменша, а в якій — найбільша?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Найменша температура води через 15 хв — у <strong>чашці Петрі</strong> (~28 °C), а найбільша (вода найдовше зберегла тепло) — у <strong>колбі</strong> (~58 °C).
+            </div>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">• Поясни, чому температура води в посудинах неоднакова. Які чинники сприяли швидшому охолодженню?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Вода охолоджується через <strong>випаровування</strong>. Швидкість випаровування залежить від <strong>площі вільної поверхні рідини</strong>. У чашці Петрі поверхня найширша — молекули вилітають найшвидше, забираючи із собою тепло. У колбі горлечко вузьке, випаровування ускладнене, тому вода довго зберігає тепло.
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,133 @@
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🧪 Завдання № 1</h2>
+    <div class="card-subtitle">Дослідження розчинності різних твердих речовин у воді</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Інструкція із зошита (ст. 22):</strong> Досліди, чи розчиняються у воді <em>лимонна кислота</em>, <em>крохмаль</em>, <em>кухонна сіль</em>, <em>харчова сода</em> та <em>борошно</em>. Запиши свої спостереження.
+</div>
+
+<!-- Interactive Simulation Container -->
+<div class="sim-box">
+  <!-- Selector pills for substances -->
+  <div class="selector-pills">
+    <button class="substance-pill active" data-substance="citric" onclick="setSubstance('citric')">🍋 Лимонна кислота</button>
+    <button class="substance-pill" data-substance="starch" onclick="setSubstance('starch')">🌾 Крохмаль</button>
+    <button class="substance-pill" data-substance="salt" onclick="setSubstance('salt')">🧂 Кухонна сіль</button>
+    <button class="substance-pill" data-substance="soda" onclick="setSubstance('soda')">🧁 Харчова сода</button>
+    <button class="substance-pill" data-substance="flour" onclick="setSubstance('flour')">🌾 Борошно</button>
+  </div>
+
+  <canvas id="canvasExp1" class="sim-canvas" width="600" height="230"></canvas>
+
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary" onclick="addSubstance()">🥄 Додати речовину</button>
+    <button class="btn btn-sm btn-accent" onclick="stirExp1()">🌀 Перемішати паличкою</button>
+    <button class="btn btn-sm btn-amber" onclick="waitAndSettle()">⏳ Зачекати 10 хв (осад)</button>
+    <button class="btn btn-sm btn-purple" id="btnMicroscopeExp1" onclick="toggleMicroscopeExp1()">🔬 Погляд у мікроскоп</button>
+    <button class="btn btn-sm btn-secondary" onclick="resetExp1()">🔄 Скинути</button>
+  </div>
+
+  <div id="exp1Status" class="sim-status" style="color:#0369a1;">
+    Виберіть речовину та натисніть «🥄 Додати речовину», щоб розпочати дослід!
+  </div>
+</div>
+
+<!-- Mini-Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Які речовини з досліджених є практично НЕРОЗЧИННИМИ у холодній воді?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 1, 'Правильно! Борошно та крохмаль не розчиняються у воді й утворюють завись (суспензію), яка з часом осідає на дно.')">
+      🌾 Борошно та крохмаль
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">
+      🧂 Кухонна сіль та лимонна кислота
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">
+      🧁 Лише харчова сода
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook entries -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Короткі записи для зошита (ст. 22)</div>
+
+  <div class="q-block">
+    <label class="q-label">Лимонна кислота:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Добре розчиняється, розчин прозорий без осаду.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Крохмаль:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Не розчиняється, вода каламутна, осідає на дно.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Кухонна сіль:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Добре розчиняється, розчин прозорий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Харчова сода:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Малорозчинна (розчиняється частково).
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">Борошно:</label>
+    <div class="answer-box">
+      ✏️ <strong>Запис у зошит:</strong> Не розчиняється, утворює білий осад.
+    </div>
+  </div>
+
+  <!-- Summary Table for notebook -->
+  <div class="table-container" style="margin-top:10px;">
+    <table class="nb-table">
+      <thead>
+        <tr>
+          <th>Речовина</th>
+          <th>Розчинність у воді</th>
+          <th>Зовнішній вигляд суміші</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Лимонна кислота</strong></td>
+          <td><span style="color:#15803d; font-weight:700;">Добре розчинна</span></td>
+          <td>Прозорий, безбарвний розчин</td>
+        </tr>
+        <tr>
+          <td><strong>Кухонна сіль</strong></td>
+          <td><span style="color:#15803d; font-weight:700;">Добре розчинна</span></td>
+          <td>Прозорий розчин, без осаду</td>
+        </tr>
+        <tr>
+          <td><strong>Харчова сода</strong></td>
+          <td><span style="color:#b45309; font-weight:700;">Малорозчинна</span></td>
+          <td>Слабко-каламутний або прозорий розчин</td>
+        </tr>
+        <tr>
+          <td><strong>Крохмаль</strong></td>
+          <td><span style="color:#b91c1c; font-weight:700;">Практично нерозчинний</span></td>
+          <td>Каламутна завись, осідає на дно</td>
+        </tr>
+        <tr>
+          <td><strong>Борошно</strong></td>
+          <td><span style="color:#b91c1c; font-weight:700;">Практично нерозчинне</span></td>
+          <td>Непрозора біла суспензія з осадом</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

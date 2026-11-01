@@ -1,0 +1,77 @@
+<div class="card-header">
+  <div>
+    <h2 class="card-title">⬛ Зразок № 3 — Кам'яне вугілля</h2>
+    <div class="card-subtitle">Осадова горюча корисна копалина</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Інструкція:</strong> Досліди зразок кам'яного вугілля. Зверни увагу на чорний насичений колір і блискучі грані. Воно легко горить і виділяє велику кількість тепла.
+</div>
+
+<div class="sim-box">
+  <canvas id="canvasRock_coal" class="sim-canvas" width="600" height="230"></canvas>
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary" id="btnLoupe_coal" onclick="toggleMagnifier('coal')">🔍 Дослідити під лупою</button>
+  </div>
+  <div class="sim-status" style="color:#0369a1;">
+    Під лупою помітні блискучі смолисті грані та шарувата структура скам'янілої деревини.
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: З чого утворилося кам'яне вугілля мільйони років тому?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 3, 'Точно! Кам\'яне вугілля утворилося з прадавніх велетенських деревоподібних папоротей і хвощів.')">
+      🌿 З відмерлих решток давніх рослин і дерев
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">
+      🌋 Із застиглої вулканічної лави
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 3)">
+      🐚 З мушель молюсків
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Характеристики для таблиці (ст. 29)</div>
+
+  <div class="q-block">
+    <label class="q-label">1. Колір:</label>
+    <div class="answer-box">
+      ✏️ Чорний.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">2. Блиск:</label>
+    <div class="answer-box">
+      ✏️ Смолистий, скляний (напівметалічний).
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">3. Прозорість:</label>
+    <div class="answer-box">
+      ✏️ Непрозорий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">4. Пухка / щільна:</label>
+    <div class="answer-box">
+      ✏️ Щільна, але крихка (легко розколюється).
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">5. Використання людиною:</label>
+    <div class="answer-box">
+      ✏️ Паливо для опалення і ТЕС, виплавка металів, сировина для хімії.
+    </div>
+  </div>
+</div>

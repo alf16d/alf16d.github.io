@@ -1,222 +1,152 @@
-// Audio synthesizer for interactive clicks, bubbles, bells, fanfare
-    let audioCtx = null;
-    let soundEnabled = true;
+/* === pr2-core.js === */
+/* Core Navigation, Step Indicator, Quizzes, High-DPI Canvas Setup */
 
-    function playSound(type) {
-      if (!soundEnabled) return;
-      try {
-        if (!audioCtx) {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+// Achievements tracking
+const unlockedStars = new Set();
+function unlockStar(expNum) {
+  if (!unlockedStars.has(expNum)) {
+    unlockedStars.add(expNum);
+  }
+}
+
+// Mini-quiz validation
+function checkQuiz(btn, isCorrect, expNum) {
+  const container = btn.closest(".quiz-options");
+  if (btn.classList.contains("correct") || btn.classList.contains("wrong")) return;
+  if (container && container.querySelector(".quiz-btn.correct")) return;
+
+  if (!btn.dataset.original) {
+    btn.dataset.original = btn.innerHTML.trim();
+  }
+
+  if (isCorrect) {
+    btn.classList.remove("wrong");
+    btn.classList.add("correct");
+    btn.innerHTML = btn.dataset.original + " ✅";
+    if (container) {
+      container.querySelectorAll(".quiz-btn").forEach(b => {
+        if (b !== btn) {
+          b.style.pointerEvents = "none";
+          b.style.opacity = "0.45";
         }
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        const now = audioCtx.currentTime;
-
-        if (type === 'pop') {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(450, now);
-          osc.frequency.exponentialRampToValueAtTime(850, now + 0.08);
-          gain.gain.setValueAtTime(0.2, now);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-          osc.start(now);
-          osc.stop(now + 0.08);
-        } else if (type === 'bubble') {
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(280, now);
-          osc.frequency.exponentialRampToValueAtTime(650, now + 0.12);
-          gain.gain.setValueAtTime(0.25, now);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
-          osc.start(now);
-          osc.stop(now + 0.12);
-        } else if (type === 'ding') {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(587.33, now); // D5
-          osc.frequency.setValueAtTime(880, now + 0.08); // A5
-          gain.gain.setValueAtTime(0.2, now);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
-          osc.start(now);
-          osc.stop(now + 0.35);
-        } else if (type === 'fanfare') {
-          // 3 ascending notes
-          [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
-            const o = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
-            o.connect(g);
-            g.connect(audioCtx.destination);
-            o.frequency.setValueAtTime(freq, now + i * 0.1);
-            g.gain.setValueAtTime(0.18, now + i * 0.1);
-            g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.25);
-            o.start(now + i * 0.1);
-            o.stop(now + i * 0.1 + 0.25);
-          });
-        }
-      } catch (e) {
-        console.warn('Audio not available:', e);
-      }
-    }
-
-    // Toggle sound
-    document.getElementById('btnSoundToggle').addEventListener('click', function() {
-      soundEnabled = !soundEnabled;
-      this.textContent = soundEnabled ? '🔊' : '🔇';
-      if (soundEnabled) playSound('pop');
-    });
-
-    // Achievements tracking
-    const unlockedStars = new Set();
-    function unlockStar(expNum) {
-      if (!unlockedStars.has(expNum)) {
-        unlockedStars.add(expNum);
-        playSound('ding');
-      }
-    }
-
-    // Mini-quiz validation
-    function checkQuiz(btn, isCorrect, expNum) {
-      const container = btn.closest('.quiz-options');
-      // If this button was already clicked, do nothing
-      if (btn.classList.contains('correct') || btn.classList.contains('wrong')) return;
-      // If another button in this quiz is already correct, ignore
-      if (container && container.querySelector('.quiz-btn.correct')) return;
-
-      if (!btn.dataset.original) {
-        btn.dataset.original = btn.innerHTML.trim();
-      }
-
-      if (isCorrect) {
-        playSound('ding');
-        btn.classList.remove('wrong');
-        btn.classList.add('correct');
-        btn.innerHTML = btn.dataset.original + ' ✅';
-        if (container) {
-          container.querySelectorAll('.quiz-btn').forEach(b => {
-            if (b !== btn) {
-              b.style.pointerEvents = 'none';
-              b.style.opacity = '0.45';
-            }
-          });
-        }
-        unlockStar(expNum);
-      } else {
-        playSound('pop');
-        btn.classList.add('wrong');
-        btn.innerHTML = btn.dataset.original + ' ❌';
-        btn.style.pointerEvents = 'none';
-      }
-    }
-
-    // Navigation & Tabs
-    const tabs = ['tab-intro', 'tab-exp1', 'tab-exp2', 'tab-exp3', 'tab-exp4', 'tab-exp5', 'tab-summary'];
-    let currentTabIndex = 0;
-
-    function goToTab(tabId) {
-      playSound('pop');
-      const idx = tabs.indexOf(tabId);
-      if (idx !== -1) currentTabIndex = idx;
-
-      // Update contents
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.toggle('active', content.id === tabId);
-      });
-
-      // Update bottom indicator
-      document.getElementById('currentStepIndicator').textContent = `Крок ${currentTabIndex + 1} з ${tabs.length}`;
-      document.getElementById('btnPrevTab').style.visibility = currentTabIndex === 0 ? 'hidden' : 'visible';
-      document.getElementById('btnNextTab').textContent = currentTabIndex === tabs.length - 1 ? 'Завершити 🎉' : 'Наступна ➡️';
-
-      // Scroll to top smoothly
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // Redraw canvases with proper sizes
-      requestAnimationFrame(() => {
-        if (tabId === 'tab-exp1') drawExp1();
-        if (tabId === 'tab-exp2') initExp2();
-        if (tabId === 'tab-exp3') initExp3();
-        if (tabId === 'tab-exp4') drawExp4();
-        if (tabId === 'tab-exp5') drawExp5();
       });
     }
+    unlockStar(expNum);
+  } else {
+    btn.classList.add("wrong");
+    btn.innerHTML = btn.dataset.original + " ❌";
+    btn.style.pointerEvents = "none";
+  }
+}
 
-    function navStep(direction) {
-      const nextIndex = currentTabIndex + direction;
-      if (nextIndex >= 0 && nextIndex < tabs.length) {
-        goToTab(tabs[nextIndex]);
-      }
-    }
+// Navigation & Tabs
+const tabs = ["tab-intro", "tab-exp1", "tab-exp2", "tab-exp3", "tab-exp4", "tab-exp5", "tab-summary"];
+let currentTabIndex = 0;
 
-    // Equipment checklist
-    function toggleEquip(item) {
-      playSound('pop');
-      item.classList.toggle('checked');
-    }
+function goToTab(tabId) {
+  const idx = tabs.indexOf(tabId);
+  if (idx !== -1) currentTabIndex = idx;
 
-    // Modal Scans
-    const scanModal = document.getElementById('scanModal');
-    const modalScanImg = document.getElementById('modalScanImg');
-    const btnScanModal = document.getElementById('btnScanModal');
-    if (btnScanModal) {
-      btnScanModal.addEventListener('click', () => {
-        playSound('pop');
-        scanModal.classList.add('open');
-      });
-    }
-    function closeScanModal() {
-      scanModal.classList.remove('open');
-    }
-    function showScanPage(pg) {
-      playSound('pop');
-      modalScanImg.src = pg === 17 ? 'page_17.jpg' : 'page_18.jpg';
-    }
+  // Update contents
+  document.querySelectorAll(".tab-content").forEach(content => {
+    content.classList.toggle("active", content.id === tabId);
+  });
 
-    // Modal Video
-    const videoModal = document.getElementById('videoModal');
-    const videoPlayer = document.getElementById('videoPlayer');
-    const btnVideoModal = document.getElementById('btnVideoModal');
-    if (btnVideoModal) {
-      btnVideoModal.addEventListener('click', () => {
-        playSound('pop');
-        videoModal.classList.add('open');
-      });
-    }
-    function closeVideoModal() {
-      videoModal.classList.remove('open');
-      if (videoPlayer) videoPlayer.pause();
-    }
+  // Update bottom indicator
+  document.getElementById("currentStepIndicator").textContent = `Крок ${currentTabIndex + 1} з ${tabs.length}`;
+  document.getElementById("btnPrevTab").style.visibility = currentTabIndex === 0 ? "hidden" : "visible";
+  document.getElementById("btnNextTab").style.visibility = currentTabIndex === tabs.length - 1 ? "hidden" : "visible";
+  document.getElementById("btnNextTab").textContent = "Наступна ➡️";
 
-    function copyConclusion() {
-      playSound('ding');
-      const text = document.getElementById('conclusionText').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Текст висновку скопійовано! Можна вставити в зошит.');
-      }).catch(() => {
-        alert('Виділіть та скопіюйте текст вручну.');
-      });
-    }
+  // Scroll to top smoothly
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
-    /* =========================================================================
-       HELPER: High-DPI Canvas Setup
-       ========================================================================= */
-    function getContextScaled(canvas, defaultH = 205) {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = canvas.getBoundingClientRect();
-      const cssW = rect.width > 50 ? rect.width : (window.innerWidth < 500 ? window.innerWidth - 20 : 580);
-      const cssH = rect.height > 50 ? rect.height : defaultH;
-      if (canvas.width !== Math.round(cssW * dpr) || canvas.height !== Math.round(cssH * dpr)) {
-        canvas.width = Math.round(cssW * dpr);
-        canvas.height = Math.round(cssH * dpr);
-      }
-      const ctx = canvas.getContext('2d');
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
-      return { ctx, w: cssW, h: cssH };
-    }
+  // Redraw canvases with proper sizes
+  requestAnimationFrame(() => {
+    if (tabId === "tab-exp1" && typeof drawExp1 === "function") drawExp1();
+    if (tabId === "tab-exp2" && typeof initExp2 === "function") initExp2();
+    if (tabId === "tab-exp3" && typeof initExp3 === "function") initExp3();
+    if (tabId === "tab-exp4" && typeof drawExp4 === "function") drawExp4();
+    if (tabId === "tab-exp5" && typeof drawExp5 === "function") drawExp5();
+  });
+}
 
+function navStep(direction) {
+  const nextIndex = currentTabIndex + direction;
+  if (nextIndex >= 0 && nextIndex < tabs.length) {
+    goToTab(tabs[nextIndex]);
+  }
+}
+
+// Equipment checklist dummy handler
+function toggleEquip(item) {}
+
+/* HELPER: High-DPI Canvas Setup */
+function getContextScaled(canvas, defaultH = 205) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const rect = canvas.getBoundingClientRect();
+  const cssW = rect.width > 50 ? rect.width : (window.innerWidth < 500 ? window.innerWidth - 10 : 580);
+  const cssH = rect.height > 50 ? rect.height : defaultH;
+  if (canvas.width !== Math.round(cssW * dpr) || canvas.height !== Math.round(cssH * dpr)) {
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+  }
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+  return { ctx, w: cssW, h: cssH };
+}
+
+// Window resize & load handlers
+window.addEventListener("resize", () => {
+  if (typeof drawExp1 === "function") drawExp1();
+  if (typeof drawExp2 === "function") drawExp2();
+  if (typeof drawExp3 === "function") drawExp3();
+  if (typeof drawExp4 === "function") drawExp4();
+  if (typeof drawExp5 === "function") drawExp5();
+});
+
+window.addEventListener("load", () => {
+  if (typeof drawExp1 === "function") drawExp1();
+  if (typeof initExp2 === "function") initExp2();
+  if (typeof initExp3 === "function") initExp3();
+  if (typeof drawExp4 === "function") drawExp4();
+  if (typeof drawExp5 === "function") drawExp5();
+});
+
+
+/* === pr2-modals.js === */
+/* Modals: Notebook scans and video */
+const scanModal = document.getElementById("scanModal");
+const modalScanImg = document.getElementById("modalScanImg");
+const btnScanModal = document.getElementById("btnScanModal");
+if (btnScanModal) {
+  btnScanModal.addEventListener("click", () => {
+    scanModal.classList.add("open");
+  });
+}
+function closeScanModal() {
+  if (scanModal) scanModal.classList.remove("open");
+}
+function showScanPage(pg) {
+  if (modalScanImg) modalScanImg.src = pg === 17 ? "page_17.jpg" : "page_18.jpg";
+}
+
+const videoModal = document.getElementById("videoModal");
+const videoPlayer = document.getElementById("videoPlayer");
+const btnVideoModal = document.getElementById("btnVideoModal");
+if (btnVideoModal) {
+  btnVideoModal.addEventListener("click", () => {
+    videoModal.classList.add("open");
+  });
+}
+function closeVideoModal() {
+  if (videoModal) videoModal.classList.remove("open");
+  if (videoPlayer) videoPlayer.pause();
+}
+
+
+/* === pr2-exp1.js === */
     /* =========================================================================
        EXPERIMENT 1: СПИРТ vs ВОДА (CANVAS VISUALIZATION)
        ========================================================================= */
@@ -466,7 +396,6 @@
     }
 
     function wetCloths() {
-      playSound('bubble');
       exp1State.wetted = true;
       exp1State.waterWetness = 1.0;
       exp1State.alcoholWetness = 1.0;
@@ -494,7 +423,6 @@
 
     function pass15MinExp1() {
       if (!exp1State.wetted) wetCloths();
-      playSound('ding');
       exp1State.waterWetness = 0.65; // Still very wet
       exp1State.alcoholWetness = 0.0;  // Completely dry!
       unlockStar(1);
@@ -515,20 +443,20 @@
     }
 
     function toggleMicroscopeExp1() {
-      playSound('pop');
       exp1State.microscope = !exp1State.microscope;
       document.getElementById('btnMicroscopeExp1').textContent = exp1State.microscope ? '🍽️ Звичайний вигляд' : '🔬 Погляд на молекули';
       drawExp1();
     }
 
     function resetExp1() {
-      playSound('pop');
       exp1State = { wetted: false, microscope: false, waterWetness: 0, alcoholWetness: 0, particles: [], droplets: [] };
       document.getElementById('btnMicroscopeExp1').textContent = '🔬 Погляд на молекули';
       document.getElementById('clothStatus').textContent = 'Натисніть «Змочити клаптики», щоб розпочати дослід!';
       drawExp1();
     }
 
+
+/* === pr2-exp2.js === */
     /* =========================================================================
        EXPERIMENT 2: МАНДАРИН (CLASSROOM DIFFUSION)
        ========================================================================= */
@@ -658,7 +586,6 @@
     }
 
     function peelMandarin() {
-      playSound('pop');
       exp2State.peeled = true;
       unlockStar(2);
       document.getElementById('mandarinStatus').innerHTML = '🍊 <strong>Мандарин очищено!</strong> Молекули ефірних олій дифундують у повітрі від столу до парт.';
@@ -676,7 +603,6 @@
     }
 
     function resetExp2() {
-      playSound('pop');
       if (exp2State.animId) cancelAnimationFrame(exp2State.animId);
       exp2State.peeled = false;
       exp2State.particles = [];
@@ -685,6 +611,8 @@
       drawExp2();
     }
 
+
+/* === pr2-exp3.js === */
     /* =========================================================================
        EXPERIMENT 3: ЧАЙ (ДИФУЗІЯ В РІДИНАХ ЗА T°)
        ========================================================================= */
@@ -891,7 +819,6 @@
     }
 
     function dropTeaBags() {
-      playSound('bubble');
       exp3State.teaDropped = true;
       unlockStar(3);
       document.getElementById('teaStatus').innerHTML = '🍵 <strong>Пакетики опущено!</strong> У гарячій воді заварка миттєво дифундує по всій склянці.';
@@ -928,14 +855,12 @@
     }
 
     function toggleMicroscope() {
-      playSound('pop');
       exp3State.microscope = !exp3State.microscope;
       document.getElementById('btnMicroscope').textContent = exp3State.microscope ? '🥛 Звичайний вигляд' : '🔬 Мікроскоп частинок';
       drawExp3();
     }
 
     function resetExp3() {
-      playSound('pop');
       if (exp3State.animId) cancelAnimationFrame(exp3State.animId);
       exp3State.teaDropped = false;
       exp3State.microscope = false;
@@ -947,6 +872,8 @@
       drawExp3();
     }
 
+
+/* === pr2-exp4.js === */
     /* =========================================================================
        EXPERIMENT 4: ПОСУДИНИ ТА ПЛОЩА ПОВЕРХНІ
        ========================================================================= */
@@ -1091,7 +1018,6 @@
     }
 
     function pourHotWaterExp4() {
-      playSound('bubble');
       exp4State.poured = true;
       exp4State.after15m = false;
       exp4State.tPetri = 80;
@@ -1103,7 +1029,6 @@
 
     function wait15mExp4() {
       if (!exp4State.poured) pourHotWaterExp4();
-      playSound('ding');
       exp4State.after15m = true;
       exp4State.tPetri = 28; // Cools rapidly!
       exp4State.tBeaker = 44; // Moderate
@@ -1114,12 +1039,13 @@
     }
 
     function resetExp4() {
-      playSound('pop');
       exp4State = { poured: false, after15m: false, tPetri: 20, tBeaker: 20, tFlask: 20 };
       document.getElementById('vesselStatus').textContent = 'Натисни «Налити гарячу воду», щоб розпочати вимірювання!';
       drawExp4();
     }
 
+
+/* === pr2-exp5.js === */
     /* =========================================================================
        EXPERIMENT 5: ПЛАСТИЛІН (ДИФУЗІЯ У ТВЕРДИХ ТІЛАХ)
        ========================================================================= */
@@ -1224,7 +1150,6 @@
     }
 
     function joinClay() {
-      playSound('pop');
       exp5State.joined = true;
       exp5State.separated = false;
       exp5State.kneaded = false;
@@ -1233,7 +1158,6 @@
     }
 
     function separateClay() {
-      playSound('pop');
       if (!exp5State.joined) joinClay();
       exp5State.separated = true;
       exp5State.kneaded = false;
@@ -1243,7 +1167,6 @@
     }
 
     function kneadClay() {
-      playSound('bubble');
       exp5State.kneaded = true;
       exp5State.joined = true;
       exp5State.separated = false;
@@ -1251,21 +1174,3 @@
       document.getElementById('clayStatus').innerHTML = '🔥 <strong>Розім\'яли пальцями:</strong> Тепло рук і механічне змішування дали зелений колір!';
       drawExp5();
     }
-
-    // Window resize handler to maintain crisp visuals on orientation change or window resize
-    window.addEventListener('resize', () => {
-      drawExp1();
-      drawExp2();
-      drawExp3();
-      drawExp4();
-      drawExp5();
-    });
-
-    // Initialize all canvas views on load
-    window.addEventListener('load', () => {
-      drawExp1();
-      initExp2();
-      initExp3();
-      drawExp4();
-      drawExp5();
-    });

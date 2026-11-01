@@ -1,0 +1,60 @@
+<div class="card-header">
+          <div>
+            <h2 class="card-title">💧 Завдання № 1</h2>
+            <div class="card-subtitle">Порівняння швидкості висихання води та спирту</div>
+          </div>
+          <span class="action-badge badge-water">Дослід 1</span>
+        </div>
+
+        <div class="tip-box">
+          📖 <strong>Інструкція:</strong> Зволож один клаптик тканини водою, а другий — розчином етилового спирту. Поклади їх окремо на тарілки. Через 15 хв досліди обидва клаптики.
+        </div>
+
+        <!-- Interactive Simulation Container -->
+        <div class="sim-box">
+          <canvas id="canvasExp1" class="sim-canvas" width="600" height="230"></canvas>
+          <div class="sim-controls">
+            <button class="btn btn-sm btn-secondary" id="btnWetCloths" onclick="wetCloths()">💧 Змочити клаптики</button>
+            <button class="btn btn-sm btn-accent" id="btnPass15min" onclick="pass15MinExp1()">⏱️ Зачекати 15 хвилин</button>
+            <button class="btn btn-sm btn-purple" id="btnMicroscopeExp1" onclick="toggleMicroscopeExp1()">🔬 Погляд на молекули</button>
+            <button class="btn btn-sm btn-secondary" onclick="resetExp1()">🔄 Скинути</button>
+          </div>
+          <div id="clothStatus" class="sim-status" style="color:#0369a1;">
+            Натисніть «Змочити клаптики», щоб розпочати дослід!
+          </div>
+        </div>
+
+        <!-- Mini-Quiz for Kids -->
+        <div class="mini-quiz">
+          <div class="mini-quiz-title">💡 Швидка перевірка: Яка рідина випарувалася першою?</div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, true, 1)">🧪 Спирт</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">💧 Вода</button>
+          </div>
+        </div>
+
+        <!-- Notebook questions -->
+        <div class="notebook-section">
+          <div class="notebook-title">✍️ Записи у зошит (ст. 17)</div>
+
+          <div class="q-block">
+            <label class="q-label">1. Чи однаково вологими залишилися клаптики тканини?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Ні, клаптики залишилися не однаково вологими. Клаптик зі спиртом уже повністю висох, а клаптик з водою все ще залишається вологим.
+            </div>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">2. Який клаптик тканини сохне швидше?</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Швидше сохне клаптик тканини, змочений спиртом (розчином етилового спирту).
+            </div>
+          </div>
+
+          <div class="q-block">
+            <label class="q-label">3. Поясни, чому швидкість висихання клаптиків тканини різна.</label>
+            <div class="answer-box">
+              ✏️ <strong>Запис у зошит:</strong> Різні рідини мають різну швидкість випаровування. Сили взаємодії між молекулами спирту значно слабші, ніж між молекулами води, тому молекули спирту легше й швидше відриваються від поверхні тканини і вилітають у повітря у вигляді пари.
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,77 @@
+<div class="card-header">
+  <div>
+    <h2 class="card-title">🪨 Зразок № 1 — Граніт</h2>
+    <div class="card-subtitle">Магматична гірська порода</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  📖 <strong>Інструкція:</strong> Розглянь зразок граніту за допомогою лупи. Зверни увагу на неоднорідне забарвлення: рожеві та червоні зерна польового шпату, прозорі зерна кварцу та чорні блискучі лусочки слюди.
+</div>
+
+<div class="sim-box">
+  <canvas id="canvasRock_granite" class="sim-canvas" width="600" height="230"></canvas>
+  <div class="sim-controls">
+    <button class="btn btn-sm btn-primary" id="btnLoupe_granite" onclick="toggleMagnifier('granite')">🔍 Дослідити під лупою</button>
+  </div>
+  <div class="sim-status" style="color:#0369a1;">
+    Під лупою чітко видно окремі зерна трьох мінералів: польового шпату, кварцу та слюди.
+  </div>
+</div>
+
+<!-- Mini Quiz -->
+<div class="mini-quiz">
+  <div class="mini-quiz-title">💡 Швидка перевірка: Зі скількох головних мінералів складається граніт?</div>
+  <div class="quiz-options">
+    <button class="quiz-btn" onclick="checkQuiz(this, true, 1, 'Вірно! Граніт складається з трьох мінералів: кварцу, польового шпату та слюди.')">
+      🔹 З 3 мінералів (шпат, кварц, слюда)
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">
+      🔹 З одного чистого металу
+    </button>
+    <button class="quiz-btn" onclick="checkQuiz(this, false, 1)">
+      🔹 З морського піску
+    </button>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- Notebook Section -->
+<div class="notebook-section">
+  <div class="notebook-title">✍️ Характеристики для таблиці (ст. 29)</div>
+
+  <div class="q-block">
+    <label class="q-label">1. Колір:</label>
+    <div class="answer-box">
+      ✏️ Сірий або рожевий із темними цятками.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">2. Блиск:</label>
+    <div class="answer-box">
+      ✏️ Скляний (у зерен слюди та кварцу) і матовий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">3. Прозорість:</label>
+    <div class="answer-box">
+      ✏️ Непрозорий.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">4. Пухка / щільна:</label>
+    <div class="answer-box">
+      ✏️ Дуже щільна, тверда, міцна.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <label class="q-label">5. Використання людиною:</label>
+    <div class="answer-box">
+      ✏️ Будівництво, облицювання споруд, пам'ятники, бруківка, щебінь.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="modal-backdrop" id="scanModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">📖 Сторінки друкованого зошита</h3>
+        <button class="close-btn" onclick="closeScanModal()">✕</button>
+      </div>
+      <div style="display:flex; gap:8px; margin-bottom:12px;">
+        <button class="btn btn-sm btn-secondary" style="flex:1;" onclick="showScanPage(17)">Сторінка 17</button>
+        <button class="btn btn-sm btn-secondary" style="flex:1;" onclick="showScanPage(18)">Сторінка 18</button>
+      </div>
+      <img id="modalScanImg" src="page_17.jpg" alt="Сторінка зошита" class="modal-image">
+      <p style="font-size:12px; text-align:center; color:#64748b;">
+        Перегляд оригінальних сторінок для звірки із паперовим зошитом учня.
+      </p>
+    </div>
+  </div>
+
+  <!-- Modal for Experiment Video -->
+  <div class="modal-backdrop" id="videoModal">
+    <div class="modal-content" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🎬 Відео практичної роботи</h3>
+        <button class="close-btn" onclick="closeVideoModal()">✕</button>
+      </div>
+      <video id="videoPlayer" controls style="width:100%; border-radius:12px; background:#000; margin-bottom:10px;" preload="metadata">
+        <source src="../Відео/13 Практична робота № 2 Спостереження явищ дифузії та випаровування.mp4" type="video/mp4">
+        Ваш браузер не підтримує відтворення відео.
+      </video>
+      <p style="font-size:12px; color:#475569; text-align:center;">
+        Відеозапис дослідів до уроку №13 (дифузія та випаровування).
+      </p>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
